@@ -1,35 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="..\output.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="..\output.css">
 </head>
 <body class="bg-gray-100">
-    <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">
-    <div class="flex justify-between font-Poppins items-center ">
-      <span class="text-2xl cursor-pointer">
-        <img class="h-10 inline" src="..\assets\seriosmd_logo.png">
-      </span>
+        <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">
+        <div class="flex justify-between font-Poppins items-center ">
+            <span class="text-2xl cursor-pointer">
+                <img class="h-10 inline" src="..\assets\seriosmd_logo.png">
+            </span>
 
-      <span class="text-3xl cursor-pointer mx-2 md:hidden block">
-        <ion-icon name="menu" onclick="Menu(this)"></ion-icon>
-      </span>
+            <span class="text-3xl cursor-pointer mx-2 md:hidden block">
+                <ion-icon name="menu" onclick="Menu(this)"></ion-icon>
+            </span>
+        </div>
+
+        <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-blue-600 duration-500">ABOUT</a>
+            </li>
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-blue-600 duration-500">CONTACT</a>
+            </li>
+
+            <a href="../landing page/index.html" class="bg-blue-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-blue-600 rounded ">
+                Exit
+            </a>
+        </ul>
+    </nav>
+
+    <div class="p-5 bg-gray-100 flex justify-center">
+        <table class="w-11/12 rounded-lg shadow-lg bg-white">
+            <thead>
+                <tr>
+                    <th class = "p-3 text-sm font-semibold">Header 1</th>
+                    <th class = "p-3 text-sm font-semibold">Header 2</th>
+                    <th class = "p-3 text-sm font-semibold">Header 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class = "p-3 text-sm text-gray-700">Data 1</td>
+                    <td class = "p-3 text-sm text-gray-700">Data 2</td>
+                    <td class = "p-3 text-sm text-gray-700">Data 3</td>
+                </tr>
+                <tr>
+                    <td class = "p-3 text-sm text-gray-700">Data 4</td>
+                    <td class = "p-3 text-sm text-gray-700">Data 5</td>
+                    <td class = "p-3 text-sm text-gray-700">Data 6</td>
+                </tr>
+                <tr>
+                    <td class = "p-3 text-sm text-gray-700">Data 7</td>
+                    <td class = "p-3 text-sm text-gray-700">Data 8</td>
+                    <td class = "p-3 text-sm text-gray-700">Data 9</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
-      <li class="mx-4 my-6 md:my-0">
-        <a href="#" class="text-xl hover:text-cyan-500 duration-500">ABOUT</a>
-      </li>
-      <li class="mx-4 my-6 md:my-0">
-        <a href="#" class="text-xl hover:text-cyan-500 duration-500">CONTACT</a>
-      </li>
-
-      <a href="../landing page/index.html" class="bg-blue-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-blue-600 rounded ">
-        Exit
-      </a>
-    </ul>
-  </nav>
+  
 </body>
 </html>
