@@ -63,11 +63,19 @@ import { createPool } from 'mysql2';
 import { connect } from 'http2';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import path, { dirname } from 'path';
 
 const app = express();
 const port = 3000;
 
+// Paths
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const viewsPath = path.join(__dirname, 'views');
+
+// Serve static files from the 'views' directory
+app.use(express.static(viewsPath));
 
 // DATABASE CONNECTIONS
 
@@ -88,7 +96,7 @@ const luzonNode = createPool({
     port: '20043',
     user: 'root',
     password: '12345678',
-    database: 'test_schema'
+    database: 'appointments_luzon'
 });
 
 const visayasMindanaoNode = createPool({
@@ -97,7 +105,7 @@ const visayasMindanaoNode = createPool({
     port: '20044',
     user: 'root',
     password: '12345678',
-    database: 'test_schema'
+    database: 'appointments_visayas_mindanao'
 });
 
 // APP ACTION FUNCTIONS
@@ -114,7 +122,8 @@ async function testConnections() {
     }
 
     // test connection to secondaryNode pool
-    const secondaryNodeConnection = util.promisify(secondaryNode.getConnection).bind(secondaryNode);
+    // TODO: right now secondary node is set to appointments_luzon. is this correct?
+    const secondaryNodeConnection = util.promisify(luzonNode.getConnection).bind(luzonNode);
     try {
         const connection = await secondaryNodeConnection();
         console.log('Connected to secondaryNode pool');
@@ -126,11 +135,9 @@ async function testConnections() {
 
 // * add options to write to different log files (we need 3, one for each database)
 function addToLog(log) {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    const filePath = `${__dirname}/log.json`;
+    const logPath = `${__dirname}/log.json`;
     
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(logPath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading log file:', err);
             return;
@@ -146,7 +153,7 @@ function addToLog(log) {
         
         logs.push(log);
         
-        fs.writeFile(filePath, JSON.stringify(logs), 'utf8', (err) => {
+        fs.writeFile(logPath, JSON.stringify(logs), 'utf8', (err) => {
             if (err) {
                 console.error('Error writing to log file:', err);
                 return;
@@ -309,9 +316,8 @@ async function deleteDataFromTable(req, res, node, id) {
 // LANDING ROUTE
 app.get('/', async (req, res) => {
     try {
-        res.send('Hello World!');
-        console.log('Hello World!');
-
+        res.sendFile(path.join(viewsPath, 'landing page', 'index.html'));
+        
         // test database connections
         await testConnections();
 
