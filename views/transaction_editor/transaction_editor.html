@@ -27,7 +27,7 @@
                 <a href="#" class="text-xl hover:text-blue-600 duration-500">CONTACT</a>
             </li>
 
-            <a href="../landing page/index.html" class="bg-teal-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-teal-600 rounded">
+            <a href="../landing page/index.html" class="bg-smdp-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-smdp-600 rounded font-bold">
                 Exit
             </a>
         </ul>
@@ -46,10 +46,40 @@
             </div>
 
             <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
-                <button class="bg-teal-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-teal-600 rounded">
+                <button onclick="showAddAppointmentModal()" class="bg-teal-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-teal-600 rounded font-bold">
                     Create New
                 </button>
             </ul>
+
+            <!--Add Modal-->
+            <div id="addAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
+                <div class="bg-white rounded shadow-md p-8 w-[40%]">
+                    <!-- Form title -->
+                    <h2 class="text-2xl font-bold mb-4 text-smdp-500">Add new appointment</h2>
+                    <!-- Form -->
+                    <form>
+                        <!-- Sample form questions -->
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-semibold mb-2">Type:</label>
+                            <input type="text" id="name" name="name" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="type">
+                        </div>
+                        <div class="mb-4">
+                            <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
+                            <input type="text" id="virtual" name="virtual" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                        </div>
+                        <div class="mb-4">
+                            <label for="clinic" class="block text-sm font-semibold mb-2">Clinic:</label>
+                            <input type="text" id="clinic" name="clinic" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" rows="4" placeholder="**turn into dropdown**">
+                        </div>
+                        <div class="flex justify-between">
+                            <!-- Cancel button -->
+                            <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
+                            <!-- Submit button -->
+                            <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Search bar -->
             <div class="ml-auto">
@@ -75,6 +105,7 @@
                     <th class="p-3 text-lg font-semibold">Type</th>
                     <th class="p-3 text-lg font-semibold">Virtual</th>
                     <th class="p-3 text-lg font-semibold">Island</th>
+                    <th class="p-3 text-lg font-semibold">Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,6 +118,9 @@
                     <td class="p-3 text-sm text-gray-700 text-center">Data 6</td>
                     <td class="p-3 text-sm text-gray-700 text-center">Data 7</td>
                     <td class="p-3 text-sm text-gray-700 text-center">Data 8</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">
+                        <button class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Edit</button>
+                    </td>
                 </tr>
                 <tr class="hover:bg-gray-200">
                     <td class="p-3 text-sm text-gray-700 text-center">Data 1</td>
@@ -97,6 +131,9 @@
                     <td class="p-3 text-sm text-gray-700 text-center">Data 6</td>
                     <td class="p-3 text-sm text-gray-700 text-center">Data 7</td>
                     <td class="p-3 text-sm text-gray-700 text-center">Data 8</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">
+                        <button class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Edit</button>
+                    </td>
                 </tr>
                 <tr class="hover:bg-gray-200">
                     <td class="p-3 text-sm text-gray-700 text-center">Data 1</td>
@@ -107,9 +144,28 @@
                     <td class="p-3 text-sm text-gray-700 text-center">Data 6</td>
                     <td class="p-3 text-sm text-gray-700 text-center">Data 7</td>
                     <td class="p-3 text-sm text-gray-700 text-center">Data 8</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">
+                        <button class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Edit</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <script>
+
+        function showAddAppointmentModal() {
+            let modal = document.getElementById('addAppointmentModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            modal.classList.add('opacity-100');
+        }
+
+        function hideAddAppointmentModal() {
+            let modal = document.getElementById('addAppointmentModal');
+            modal.classList.remove('flex');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
