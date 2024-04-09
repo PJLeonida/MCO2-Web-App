@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="..\output.css">
+        <link rel="stylesheet" href="..\additional.css">
+</head>
+<body class="bg-gray-100">
+        <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">
+        <div class="flex justify-between font-Poppins items-center ">
+            <span class="text-2xl cursor-pointer">
+                <img class="h-10 inline" src="..\assets\seriosmd_logo.png">
+            </span>
+
+            <span class="text-3xl cursor-pointer mx-2 md:hidden block">
+                <ion-icon name="menu" onclick="Menu(this)"></ion-icon>
+            </span>
+        </div>
+
+        <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-blue-600 duration-500">ABOUT</a>
+            </li>
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-blue-600 duration-500">CONTACT</a>
+            </li>
+
+            <a href="../landing page/index.html" class="bg-teal-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-teal-600 rounded">
+                Exit
+            </a>
+        </ul>
+    </nav>
+
+    <div class="bg-gray-100 md:items-center md:justify-between">
+        <nav class="p-6 flex items-center">
+            <div class="flex justify-between font-Poppins items-center ml-16">
+                <span class="text-2xl">
+                    <h1 class="inline font-bold text-smdp-500 text-5xl"> Appointments </h1>
+                </span>
+    
+                <span class="text-3xl cursor-pointer mx-2 md:hidden block">
+                    <ion-icon name="menu" onclick="Menu(this)"></ion-icon>
+                </span>
+            </div>
+
+            <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+                <button class="bg-teal-500 text-white text-xl font-Poppins duration-500 px-6 py-2 mx-4 hover:bg-teal-600 rounded">
+                    Create New
+                </button>
+            </ul>
+
+            <!-- Search bar -->
+            <div class="ml-auto">
+                <input type="text" placeholder="Search by Apt. ID" class="px-4 mr-16 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-teal-500">
+                <input type="text" placeholder="Search by Patient ID" class="px-4 mr-16 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-teal-500">
+                <input type="text" placeholder="Search by clinic" class="px-4 mr-16 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-teal-500">
+            </div>
+            
+        </nav>
+    </div>
+
+
+    <div class="flex justify-center">
+        
+        <table class="w-11/12 shadow mt-4">
+            <thead class = "bg-smdp-500 text-white">
+                <tr>
+                    <th class="p-3 text-lg font-semibold">Patient ID</th>
+                    <th class="p-3 text-lg font-semibold">Clinic ID</th>
+                    <th class="p-3 text-lg font-semibold">Clinic Name</th>
+                    <th class="p-3 text-lg font-semibold">Appointment ID</th>
+                    <th class="p-3 text-lg font-semibold">Status</th>
+                    <th class="p-3 text-lg font-semibold">Type</th>
+                    <th class="p-3 text-lg font-semibold">Virtual</th>
+                    <th class="p-3 text-lg font-semibold">Island</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-200">
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 1</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 2</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 3</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 4</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 5</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 6</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 7</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 8</td>
+                </tr>
+                <tr class="hover:bg-gray-200">
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 1</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 2</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 3</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 4</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 5</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 6</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 7</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 8</td>
+                </tr>
+                <tr class="hover:bg-gray-200">
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 1</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 2</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 3</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 4</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 5</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 6</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 7</td>
+                    <td class="p-3 text-sm text-gray-700 text-center">Data 8</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

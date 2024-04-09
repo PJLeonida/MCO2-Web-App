@@ -1,0 +1,9 @@
+.text-smdp-500{
+  --tw-text-opacity: 1;
+  color: rgb(61 53 121 / var(--tw-text-opacity));
+}
+
+.bg-smdp-500{
+    --tw-bg-opacity: 1;
+  background-color: rgb(61 53 121 / var(--tw-bg-opacity));
+  }
