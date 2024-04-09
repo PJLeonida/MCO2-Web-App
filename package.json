@@ -2,15 +2,23 @@
   "name": "mco2_web_app",
   "version": "1.0.0",
   "description": "Transaction Management Web Application",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+    "start": "nodemon server.js",
     "build": "npx tailwindcss -i ./src/input.css -o ./views/output.css --watch"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "tailwindcss": "^3.4.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.3",
+    "nodemon": "^3.1.0"
   }
 }
