@@ -55,27 +55,45 @@
             <!--Add Modal-->
             <div id="addAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
                 <div class="bg-white rounded shadow-md p-8 w-[40%]">
-                    <!-- Form title -->
                     <h2 class="text-2xl font-bold mb-4 text-smdp-500">Add new appointment</h2>
-                    <!-- Form -->
                     <form>
-                        <!-- Sample form questions -->
                         <div class="mb-4">
-                            <label for="name" class="block text-sm font-semibold mb-2">Type:</label>
-                            <input type="text" id="name" name="name" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="type">
+                            <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
+                            <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="type">
+                                <option value="1">Consultation</option>
+                            </select>
                         </div>
                         <div class="mb-4">
                             <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
-                            <input type="text" id="virtual" name="virtual" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                            <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                                <option value="1">True</option>
+                                <option value="0">False</option>
+                            </select>
                         </div>
                         <div class="mb-4">
-                            <label for="clinic" class="block text-sm font-semibold mb-2">Clinic:</label>
-                            <input type="text" id="clinic" name="clinic" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" rows="4" placeholder="**turn into dropdown**">
+                            <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
+                            <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" rows="4" placeholder="**turn into dropdown**">
+                                <option value="1">Ilocos Region (I)</option>
+                                <option value="2">Cagayan Valley (II)</option>
+                                <option value="3">Central Luzon (III)</option>
+                                <option value="4">CALABARZON (IV-A)</option>
+                                <option value="5">MIMAROPA (IV-B)</option>
+                                <option value="6">Bicol Region (V)</option>
+                                <option value="7">Cordillera Administrative Region (CAR)</option>
+                                <option value="8">National Capital Region (NCR)</option>
+                                <option value="9">Western Visayas (VI)</option>
+                                <option value="10">Central Visayas (VII)</option>
+                                <option value="11">Eastern Visayas (VIII)</option>
+                                <option value="12">Zamboanga Peninsula (IX)</option>
+                                <option value="13">Northern Mindanao (X)</option>
+                                <option value="14">Davao Region (XI)</option>
+                                <option value="15">SOCCSKSARGEN (Cotabato Region) (XII)</option>
+                                <option value="16">Caraga (XIII)</option>
+                                <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                            </select>
                         </div>
                         <div class="flex justify-between">
-                            <!-- Cancel button -->
                             <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
-                            <!-- Submit button -->
                             <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Submit</button>
                         </div>
                     </form>
@@ -98,10 +116,10 @@
         <table class="w-11/12 shadow mt-4">
             <thead class = "bg-smdp-500 text-white">
                 <tr>
+                    <th class="p-3 text-lg font-semibold">Appointment ID</th>
                     <th class="p-3 text-lg font-semibold">Patient ID</th>
                     <th class="p-3 text-lg font-semibold">Clinic ID</th>
                     <th class="p-3 text-lg font-semibold">Clinic Name</th>
-                    <th class="p-3 text-lg font-semibold">Appointment ID</th>
                     <th class="p-3 text-lg font-semibold">Schedule</th> <!--Start Time-->
                     <th class="p-3 text-lg font-semibold">Status</th>
                     <th class="p-3 text-lg font-semibold">Type</th>
@@ -130,27 +148,56 @@
         <!--Edit Modal-->
         <div id="editAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
             <div class="bg-white rounded shadow-md p-8 w-[40%]">
-                <!-- Form title -->
                 <h2 class="text-2xl font-bold mb-4 text-smdp-500">Edit appointment</h2>
-                <!-- Form -->
                 <form>
-                    <!-- Sample form questions -->
                     <div class="mb-4">
-                        <label for="name" class="block text-sm font-semibold mb-2">Type:</label>
-                        <input type="text" id="name" name="name" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="type">
+                        <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
+                        <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="type">
+                            <option value="1">Consultation</option>
+                        </select>
                     </div>
                     <div class="mb-4">
                         <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
-                        <input type="text" id="virtual" name="virtual" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                        <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                            <option value="1">True</option>
+                            <option value="0">False</option>
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <label for="clinic" class="block text-sm font-semibold mb-2">Clinic:</label>
-                        <input type="text" id="clinic" name="clinic" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" rows="4" placeholder="**turn into dropdown**">
+                        <label for="status" class="block text-sm font-semibold mb-2">Status:</label>
+                        <select id="status" name="status" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                            <option value="1">Queued</option>
+                            <option value="2">Serving</option>
+                            <option value="3">Complete</option>
+                            <option value="4">Skip</option>
+                            <option value="5">Cancel</option>
+                            <option value="6">NoShow</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
+                        <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" rows="4" placeholder="**turn into dropdown**">
+                            <option value="1">Ilocos Region (I)</option>
+                            <option value="2">Cagayan Valley (II)</option>
+                            <option value="3">Central Luzon (III)</option>
+                            <option value="4">CALABARZON (IV-A)</option>
+                            <option value="5">MIMAROPA (IV-B)</option>
+                            <option value="6">Bicol Region (V)</option>
+                            <option value="7">Cordillera Administrative Region (CAR)</option>
+                            <option value="8">National Capital Region (NCR)</option>
+                            <option value="9">Western Visayas (VI)</option>
+                            <option value="10">Central Visayas (VII)</option>
+                            <option value="11">Eastern Visayas (VIII)</option>
+                            <option value="12">Zamboanga Peninsula (IX)</option>
+                            <option value="13">Northern Mindanao (X)</option>
+                            <option value="14">Davao Region (XI)</option>
+                            <option value="15">SOCCSKSARGEN (Cotabato Region) (XII)</option>
+                            <option value="16">Caraga (XIII)</option>
+                            <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                        </select>
                     </div>
                     <div class="flex justify-between">
-                        <!-- Cancel button -->
-                        <button onclick="hideEditAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
-                        <!-- Submit button -->
+                        <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
                         <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Submit</button>
                     </div>
                 </form>
