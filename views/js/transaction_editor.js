@@ -1,3 +1,5 @@
+
+
 function showAddAppointmentModal() {
     let modal = document.getElementById('addAppointmentModal');
     modal.classList.remove('hidden');

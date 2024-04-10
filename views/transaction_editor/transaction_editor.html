@@ -6,7 +6,8 @@
         <title>Document</title>
         <link rel="stylesheet" href="..\output.css">
         <link rel="stylesheet" href="..\additional.css">
-        <script src="../js/transaction_editor.js"> </script>
+        <!-- Stylesheet for Grid.js -->
+        <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-100">
         <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">
@@ -139,6 +140,9 @@
                     </td>
                 </tr>
             </tbody>
+
+            <div id="wrapper"></div>
+
         </table>
         <!--Edit Modal-->
         <div id="editAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
@@ -200,5 +204,9 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript at bottom of body so everything else loads first. -->
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script src="../js/transaction_editor.js"> </script>
 </body>
 </html>

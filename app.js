@@ -329,6 +329,15 @@ app.get('/', async (req, res) => {
     }
 });
 
+// APPOINTMENTS PAGE ROUTE
+app.get('/appointments', async (req, res) => {
+    try {
+        res.sendFile(path.join(viewsPath, 'transaction_editor', 'transaction_editor.html'));
+    } catch (error) {
+        console.error('Error', error);
+    }
+})
+
 // ADD APPOINTMENT
 app.get('/add', async (req, res) => {
     try {
