@@ -1084,6 +1084,41 @@ app.get('/get-appointments', async (req, res) => {
     
 })
 
+app.get('/get-appointment/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const results = await new Promise((resolve, reject) => {
+            centralNode.query('SELECT * FROM appointments WHERE apptid = ?', id, (error, results, fields) => {
+                if (error) {
+                    console.error('Error executing query:', error);
+                    reject(error);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+        res.json(results);
+    } catch (error) {
+        console.error('Error querying central node:', error);
+        try {
+            const results = await new Promise((resolve, reject) => {
+                luzonNode.query('SELECT * FROM appointments WHERE apptid = ?', id, (error, results, fields) => {
+                    if (error) {
+                        console.error('Error executing query:', error);
+                        reject(error);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            });
+            res.json(results);
+        } catch (error) {
+            console.error('Error querying secondary node:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+});
+
 // ADD APPOINTMENT
 app.post('/add', async (req, res) => {
     // Get request body
