@@ -135,13 +135,6 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
             name: 'Island',
             filter: {
                 type: 'select', // Use a select dropdown for filtering
-                config: {
-                    data: [
-                        { value: 'Luzon', label: 'Luzon' },
-                        { value: 'Visayas', label: 'Visayas' },
-                        { value: 'Mindanao', label: 'Mindanao' }
-                    ]
-                }
             }
         }, {
             name: 'Actions',
@@ -214,13 +207,6 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
             name: 'Island',
             filter: {
                 type: 'select', // Use a select dropdown for filtering
-                config: {
-                    data: [
-                        { value: 'Luzon', label: 'Luzon' },
-                        { value: 'Visayas', label: 'Visayas' },
-                        { value: 'Mindanao', label: 'Mindanao' }
-                    ]
-                }
             }
         }, {
             name: 'Actions',
