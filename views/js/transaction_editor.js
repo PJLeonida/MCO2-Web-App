@@ -249,7 +249,6 @@ async function reloadAppointment() {
     }
     document.getElementById('initial-table-container').classList.add('hidden');
     document.getElementById('search-table-container').classList.remove('hidden');
-    document.getElementById('search-button').classList.add('hidden');
     document.getElementById('revert-button').classList.remove('hidden');
 }
 
