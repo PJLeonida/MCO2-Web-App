@@ -68,12 +68,9 @@
             <div class="bg-white rounded shadow-md p-8 w-[40%]">
                 <h2 class="text-2xl font-bold mb-4 text-smdp-500">Add new appointment</h2>
                 <form id="appointments-form" method="POST" action="/add">
-
                     <div class="mb-4">
-                        <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
-                        <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
-                            <option value="Consultation">Consultation</option>
-                        </select>
+                        <label for="apptid" class="block text-sm font-semibold mb-2">Appointment ID</label>
+                        <input type="text" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" id="apptid" name="apptid">
                     </div>
                     <div class="mb-4">
                         <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
@@ -103,6 +100,10 @@
                             <option value="16">Caraga (XIII)</option>
                             <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
                         </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="schedule" class="block text-sm font-semibold mb-2">Schedule</label>
+                        <input type="date" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" id="schedule" name="schedule">
                     </div>
                     <div class="flex justify-between">
                         <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
@@ -136,26 +137,8 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
-                        <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
-                            <option value="1">Ilocos Region (I)</option>
-                            <option value="2">Cagayan Valley (II)</option>
-                            <option value="3">Central Luzon (III)</option>
-                            <option value="4">CALABARZON (IV-A)</option>
-                            <option value="5">MIMAROPA (IV-B)</option>
-                            <option value="6">Bicol Region (V)</option>
-                            <option value="7">Cordillera Administrative Region (CAR)</option>
-                            <option value="8">National Capital Region (NCR)</option>
-                            <option value="9">Western Visayas (VI)</option>
-                            <option value="10">Central Visayas (VII)</option>
-                            <option value="11">Eastern Visayas (VIII)</option>
-                            <option value="12">Zamboanga Peninsula (IX)</option>
-                            <option value="13">Northern Mindanao (X)</option>
-                            <option value="14">Davao Region (XI)</option>
-                            <option value="15">SOCCSKSARGEN (Cotabato Region) (XII)</option>
-                            <option value="16">Caraga (XIII)</option>
-                            <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
-                        </select>
+                        <label for="schedule" class="block text-sm font-semibold mb-2">Schedule</label>
+                        <input id="schedule" type="date" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" id="schedule" name="schedule">
                     </div>
                     <div class="flex justify-end"></div>
                         <button onclick="hideEditAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>

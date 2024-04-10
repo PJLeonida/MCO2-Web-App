@@ -460,8 +460,8 @@ app.get('/get-appointments', async (req, res) => {
 app.post('/add', async (req, res) => {
     // Get request body
     // TODO: For now request body is incomplete
-    const { type, virtual, region } = req.body;
-    const apptid = "11111111111111111111222222222222";
+    const { apptid, virtual, region, schedule } = req.body;
+    const status = "Queued";
 
     const regionName = getRegionName(region);
     const regionIsland = getRegionIsland(region);
@@ -472,8 +472,7 @@ app.post('/add', async (req, res) => {
     // Add appointment to database
     try {
         // Also add apptid
-        console.log(type, virtual, region, regionName, regionIsland)
-        centralNode.query('INSERT INTO appointments (apptid, type, isVirtual, region, island) VALUES (?, ?, ?, ?, ?);', [apptid, type, virtual, regionName, regionIsland], (error, results, fields) => {
+        centralNode.query('INSERT INTO appointments (apptid, isVirtual, region, island, StartTime, status) VALUES (?, ?, ?, ?, ?, ?);', [apptid, virtual, regionName, regionIsland, schedule, status], (error, results, fields) => {
             if (error) {
                 throw error;
             }
@@ -501,9 +500,7 @@ app.post('/add', async (req, res) => {
 app.post('/edit/:id', async (req, res) => {
     // Get request body
     const params = req.params;
-    const { virtual, status, region } = req.body;
-    const regionName = getRegionName(region);
-    const regionIsland = getRegionIsland(region);
+    const { virtual, status, schedule } = req.body;
     // Do log functions
     
     // If each of the values exist, build the SQL script
@@ -517,13 +514,9 @@ app.post('/edit/:id', async (req, res) => {
         script += "status = ?, ";
         values.push(status);
     } 
-    if (region) {
-        script += "region = ?, ";
-        values.push(regionName);
-    } 
-    if (regionIsland) {
-        script += "island = ?, ";
-        values.push(regionIsland);
+    if (schedule) {
+        script += "StartTime = ?, ";
+        values.push(schedule);
     }
 
     // Remove the last comma and space
