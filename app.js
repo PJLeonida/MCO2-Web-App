@@ -406,7 +406,6 @@ app.post('/add', async (req, res) => {
 // EDIT APPOINTMENT
 /*
     - Region
-    - Type
     - Status
     - Virtual   
 
@@ -415,17 +414,13 @@ app.post('/add', async (req, res) => {
 app.post('/edit/:id', async (req, res) => {
     // Get request body
     const params = req.params;
-    const { type, virtual, status, region } = req.body;
+    const { virtual, status, region } = req.body;
     
     // Do log functions
     
     // If each of the values exist, build the SQL script
     let script = "UPDATE appointments SET "
     let values = [];
-    if (type) {
-        script += "type = ?, ";
-        values.push(type);
-    }   
     if (virtual) {
         script += "isVirtual = ?, ";
         values.push(virtual);

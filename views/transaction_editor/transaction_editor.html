@@ -62,39 +62,6 @@
     </div>
 
     <div class="flex justify-center">
-        
-        <table class="w-11/12 shadow mt-4">
-            <thead class = "bg-smdp-500 text-white">
-                <tr>
-                    <th class="p-3 text-lg font-semibold">Appointment ID</th>
-                    <th class="p-3 text-lg font-semibold">Patient ID</th>
-                    <th class="p-3 text-lg font-semibold">Clinic ID</th>
-                    <th class="p-3 text-lg font-semibold">Clinic Name</th>
-                    <th class="p-3 text-lg font-semibold">Schedule</th> <!--Start Time-->
-                    <th class="p-3 text-lg font-semibold">Status</th>
-                    <th class="p-3 text-lg font-semibold">Type</th>
-                    <th class="p-3 text-lg font-semibold">Virtual</th>
-                    <th class="p-3 text-lg font-semibold">Island</th>
-                    <th class="p-3 text-lg font-semibold">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="hover:bg-gray-200">
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 1</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 2</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 3</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 4</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 5</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 6</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 7</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 8</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">Data 9</td>
-                    <td class="p-3 text-sm text-gray-700 text-center">
-                        <button onclick="showEditAppointmentModal()" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Edit</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
         <!--Add Modal-->
         <div id="addAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
@@ -105,7 +72,7 @@
                     <div class="mb-4">
                         <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
                         <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
-                            <option value="1">Consultation</option>
+                            <option value="Consultation">Consultation</option>
                         </select>
                     </div>
                     <div class="mb-4">
@@ -118,23 +85,23 @@
                     <div class="mb-4">
                         <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
                         <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
-                            <option value="1">Ilocos Region (I)</option>
-                            <option value="2">Cagayan Valley (II)</option>
-                            <option value="3">Central Luzon (III)</option>
-                            <option value="4">CALABARZON (IV-A)</option>
-                            <option value="5">MIMAROPA (IV-B)</option>
-                            <option value="6">Bicol Region (V)</option>
-                            <option value="7">Cordillera Administrative Region (CAR)</option>
-                            <option value="8">National Capital Region (NCR)</option>
-                            <option value="9">Western Visayas (VI)</option>
-                            <option value="10">Central Visayas (VII)</option>
-                            <option value="11">Eastern Visayas (VIII)</option>
-                            <option value="12">Zamboanga Peninsula (IX)</option>
-                            <option value="13">Northern Mindanao (X)</option>
-                            <option value="14">Davao Region (XI)</option>
-                            <option value="15">SOCCSKSARGEN (Cotabato Region) (XII)</option>
-                            <option value="16">Caraga (XIII)</option>
-                            <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                            <option value="Ilocos Region (I)">Ilocos Region (I)</option>
+                            <option value="Cagayan Valley (II)">Cagayan Valley (II)</option>
+                            <option value="Central Luzon (III)">Central Luzon (III)</option>
+                            <option value="CALABARZON (IV-A)">CALABARZON (IV-A)</option>
+                            <option value="MIMAROPA (IV-B)">MIMAROPA (IV-B)</option>
+                            <option value="Bicol Region (V)">Bicol Region (V)</option>
+                            <option value="Cordillera Administrative Region (CAR)">Cordillera Administrative Region (CAR)</option>
+                            <option value="National Capital Region (NCR)">National Capital Region (NCR)</option>
+                            <option value="Western Visayas (VI)">Western Visayas (VI)</option>
+                            <option value="Central Visayas (VII)">Central Visayas (VII)</option>
+                            <option value="Eastern Visayas (VIII)">Eastern Visayas (VIII)</option>
+                            <option value="Zamboanga Peninsula (IX)">Zamboanga Peninsula (IX)</option>
+                            <option value="Northern Mindanao (X)">Northern Mindanao (X)</option>
+                            <option value="Davao Region (XI)">Davao Region (XI)</option>
+                            <option value="SOCCSKSARGEN (Cotabato Region) (XII)">SOCCSKSARGEN (Cotabato Region) (XII)</option>
+                            <option value="Caraga (XIII)">Caraga (XIII)</option>
+                            <option value="Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
                         </select>
                     </div>
                     <div class="flex justify-between">
@@ -151,12 +118,6 @@
                 <h2 class="text-2xl font-bold mb-4 text-smdp-500">Edit appointment</h2>
                 <form id="editAppointments" method="POST" action="#">
                     <div class="mb-4">
-                        <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
-                        <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
-                            <option value="1">Consultation</option>
-                        </select>
-                    </div>
-                    <div class="mb-4">
                         <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
                         <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="True or False">
                             <option value="1">True</option>
@@ -166,34 +127,34 @@
                     <div class="mb-4">
                         <label for="status" class="block text-sm font-semibold mb-2">Status:</label>
                         <select id="status" name="status" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="True or False">
-                            <option value="1">Queued</option>
-                            <option value="2">Serving</option>
-                            <option value="3">Complete</option>
-                            <option value="4">Skip</option>
-                            <option value="5">Cancel</option>
-                            <option value="6">NoShow</option>
+                            <option value="Queued">Queued</option>
+                            <option value="Serving">Serving</option>
+                            <option value="Complete">Complete</option>
+                            <option value="Skip">Skip</option>
+                            <option value="Cancel">Cancel</option>
+                            <option value="NoShow">NoShow</option>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
                         <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
-                            <option value="1">Ilocos Region (I)</option>
-                            <option value="2">Cagayan Valley (II)</option>
-                            <option value="3">Central Luzon (III)</option>
-                            <option value="4">CALABARZON (IV-A)</option>
-                            <option value="5">MIMAROPA (IV-B)</option>
-                            <option value="6">Bicol Region (V)</option>
-                            <option value="7">Cordillera Administrative Region (CAR)</option>
-                            <option value="8">National Capital Region (NCR)</option>
-                            <option value="9">Western Visayas (VI)</option>
-                            <option value="10">Central Visayas (VII)</option>
-                            <option value="11">Eastern Visayas (VIII)</option>
-                            <option value="12">Zamboanga Peninsula (IX)</option>
-                            <option value="13">Northern Mindanao (X)</option>
-                            <option value="14">Davao Region (XI)</option>
-                            <option value="15">SOCCSKSARGEN (Cotabato Region) (XII)</option>
-                            <option value="16">Caraga (XIII)</option>
-                            <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                            <option value="Ilocos Region (I)">Ilocos Region (I)</option>
+                            <option value="Cagayan Valley (II)">Cagayan Valley (II)</option>
+                            <option value="Central Luzon (III)">Central Luzon (III)</option>
+                            <option value="CALABARZON (IV-A)">CALABARZON (IV-A)</option>
+                            <option value="MIMAROPA (IV-B)">MIMAROPA (IV-B)</option>
+                            <option value="Bicol Region (V)">Bicol Region (V)</option>
+                            <option value="Cordillera Administrative Region (CAR)">Cordillera Administrative Region (CAR)</option>
+                            <option value="National Capital Region (NCR)">National Capital Region (NCR)</option>
+                            <option value="Western Visayas (VI)">Western Visayas (VI)</option>
+                            <option value="Central Visayas (VII)">Central Visayas (VII)</option>
+                            <option value="Eastern Visayas (VIII)">Eastern Visayas (VIII)</option>
+                            <option value="Zamboanga Peninsula (IX)">Zamboanga Peninsula (IX)</option>
+                            <option value="Northern Mindanao (X)">Northern Mindanao (X)</option>
+                            <option value="Davao Region (XI)">Davao Region (XI)</option>
+                            <option value="SOCCSKSARGEN (Cotabato Region) (XII)">SOCCSKSARGEN (Cotabato Region) (XII)</option>
+                            <option value="Caraga (XIII)">Caraga (XIII)</option>
+                            <option value="Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
                         </select>
                     </div>
                     <div class="flex justify-end"></div>

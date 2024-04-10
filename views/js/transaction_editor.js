@@ -23,7 +23,6 @@ function showEditAppointmentModal(row) {
     let modal = document.getElementById('editAppointmentModal'); // Edit Modal
     
     // Form fields
-    const typefield    = editform.querySelector('#type');
     const virtualfield = editform.querySelector('#virtual');
     const statusfield  = editform.querySelector('#status');
     const regionfield  = editform.querySelector('#region');
@@ -36,7 +35,6 @@ function showEditAppointmentModal(row) {
     modal.classList.add('opacity-100');
 
     // populate forms 
-    typefield.value = row.cells[6].data;
     virtualfield.value = row.cells[7].data;
     statusfield.value = row.cells[5].data;
     regionfield.value = row.cells[3].data;
@@ -76,7 +74,6 @@ async function getAllAppointments() {
 
 function loadAppointmentGrid(appointmentsJSON) {
 
-    console.log(`all appointments 1${appointmentsJSON}`);
 
     console.log(`ALL APPOINTMENTS: ${appointmentsJSON.forEach(appointment => {
         console.log(`Appointment: ${JSON.stringify(appointment)}`);
@@ -117,7 +114,7 @@ function loadAppointmentGrid(appointmentsJSON) {
             name: 'Island'
         }, {
             name: 'Actions',
-            formatter: () => {
+            formatter: (cell, row) => {
                 return gridjs.h('button', {
                     className: 'bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded',
                     onClick: () => showEditAppointmentModal(row)

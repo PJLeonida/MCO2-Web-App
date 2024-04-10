@@ -650,10 +650,6 @@ video {
   height: 100vh;
 }
 
-.w-11\/12 {
-  width: 91.666667%;
-}
-
 .w-\[40\%\] {
   width: 40%;
 }
@@ -739,6 +735,10 @@ video {
 
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
+}
+
+.p-14 {
+  padding: 3.5rem;
 }
 
 .p-3 {
