@@ -40,10 +40,6 @@
                 <span class="text-2xl">
                     <h1 class="inline font-bold text-smdp-500 text-5xl"> Appointments </h1>
                 </span>
-    
-                <span class="text-3xl cursor-pointer mx-2 md:hidden block">
-                    <ion-icon name="menu" onclick="Menu(this)"></ion-icon>
-                </span>
             </div>
 
             <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
@@ -59,20 +55,20 @@
                     <form>
                         <div class="mb-4">
                             <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
-                            <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="type">
+                            <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
                                 <option value="1">Consultation</option>
                             </select>
                         </div>
                         <div class="mb-4">
                             <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
-                            <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                            <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="True or False">
                                 <option value="1">True</option>
                                 <option value="0">False</option>
                             </select>
                         </div>
                         <div class="mb-4">
                             <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
-                            <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" rows="4" placeholder="**turn into dropdown**">
+                            <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
                                 <option value="1">Ilocos Region (I)</option>
                                 <option value="2">Cagayan Valley (II)</option>
                                 <option value="3">Central Luzon (III)</option>
@@ -152,20 +148,20 @@
                 <form>
                     <div class="mb-4">
                         <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
-                        <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="type">
+                        <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
                             <option value="1">Consultation</option>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
-                        <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                        <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="True or False">
                             <option value="1">True</option>
                             <option value="0">False</option>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label for="status" class="block text-sm font-semibold mb-2">Status:</label>
-                        <select id="status" name="status" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="True or False">
+                        <select id="status" name="status" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="True or False">
                             <option value="1">Queued</option>
                             <option value="2">Serving</option>
                             <option value="3">Complete</option>
@@ -176,7 +172,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
-                        <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" rows="4" placeholder="**turn into dropdown**">
+                        <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
                             <option value="1">Ilocos Region (I)</option>
                             <option value="2">Cagayan Valley (II)</option>
                             <option value="3">Central Luzon (III)</option>
@@ -196,8 +192,9 @@
                             <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
                         </select>
                     </div>
-                    <div class="flex justify-between">
-                        <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
+                    <div class="flex justify-end"></div>
+                        <button onclick="hideEditAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
+                        <button onclick="hideEditAppointmentModal()" type="button" class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded">delete</button>
                         <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Submit</button>
                     </div>
                 </form>
