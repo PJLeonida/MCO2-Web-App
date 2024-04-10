@@ -55,7 +55,7 @@ import { createPool } from 'mysql2';
 import { connect } from 'http2';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+import path, { dirname, parse } from 'path';
 import mysql from 'mysql2'
 
 
@@ -308,6 +308,91 @@ async function deleteDataFromTable(req, res, node, id) {
     }
 }
 
+function getRegionIsland(region) {
+    const regionNum = parseInt(region);
+    var island = "";
+
+    if (regionNum >= 1 && regionNum <= 8) {
+        island = "Luzon"
+    } else if (regionNum >= 9 && regionNum <= 11) {
+        island = "Visayas"
+    } else if (regionNum >= 12 && regionNum <= 17) {
+        island = "Mindanao"
+    } else {
+        island = "";
+    }
+
+    return island
+}
+
+// FUNCTION TO AUTOMATICALLY DETERMINE REGION NAME AND ISLAND BASED ON NUMBER.
+function getRegionName(region) {
+    
+    const regionNum = parseInt(region);
+    var regionName = "";
+    
+    switch (regionNum) {
+        case 1:
+            regionName = 'Ilocos Region (I)';
+            break;
+        case 2:
+            regionName = 'Cagayan Valley (II)';
+            break;
+        case 3:
+            regionName = 'Central Luzon (III)';
+            break;
+        case 4:
+            regionName = 'CALABARZON (IV-A))';
+            break;
+        case 5:
+            regionName = 'MIMAROPA (IV-B';
+            break;
+        case 6:
+            regionName = 'Bicol Region (V)';
+            break;
+        case 7:
+            regionName = 'Cordillera Administrative Region (CAR)';
+            break;
+        case 8:
+            regionName = 'National Capital Region (NCR)';
+            break;
+        case 9:
+            regionName = 'Western Visayas (VI)';
+            break;
+        case 10:
+            regionName = 'Central Visayas (VII)';
+            break;
+        case 11:
+            regionName = 'Eastern Visayas (VIII)';
+            break;
+        case 12:
+            regionName = 'Zamboanga Peninsula (IX)';
+            break;
+        case 13:
+            regionName = 'Northern Mindanao (X)';
+            break;
+        case 14:
+            regionName = 'Davao Region (XI)';
+            break;
+        case 15:
+            regionName = 'SOCCSKSARGEN (Cotabato Region) (XII)';
+            break;
+        case 16:
+            regionName = 'Caraga (XIII)';
+            break;
+        case 17:
+            regionName = 'Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)';
+            break;
+        default:
+            regionName = "";
+            break;
+
+        }
+
+    return regionName;
+}
+
+
 // SERVER ROUTES
 /*
     Add Appointment
@@ -378,15 +463,17 @@ app.post('/add', async (req, res) => {
     const { type, virtual, region } = req.body;
     const apptid = "11111111111111111111222222222222";
 
+    const regionName = getRegionName(region);
+    const regionIsland = getRegionIsland(region);
+
     await testConnections();
     // Do log check 
     
     // Add appointment to database
     try {
-        // Island should be automatic
         // Also add apptid
-        console.log(type, virtual, region)
-        centralNode.query('INSERT INTO appointments (apptid, type, isVirtual, region) VALUES (?, ?, ?, ?);', [apptid, type, virtual, region], (error, results, fields) => {
+        console.log(type, virtual, region, regionName, regionIsland)
+        centralNode.query('INSERT INTO appointments (apptid, type, isVirtual, region, island) VALUES (?, ?, ?, ?, ?);', [apptid, type, virtual, regionName, regionIsland], (error, results, fields) => {
             if (error) {
                 throw error;
             }
@@ -415,7 +502,8 @@ app.post('/edit/:id', async (req, res) => {
     // Get request body
     const params = req.params;
     const { virtual, status, region } = req.body;
-    
+    const regionName = getRegionName(region);
+    const regionIsland = getRegionIsland(region);
     // Do log functions
     
     // If each of the values exist, build the SQL script
@@ -431,8 +519,12 @@ app.post('/edit/:id', async (req, res) => {
     } 
     if (region) {
         script += "region = ?, ";
-        values.push(region);
+        values.push(regionName);
     } 
+    if (regionIsland) {
+        script += "island = ?, ";
+        values.push(regionIsland);
+    }
 
     // Remove the last comma and space
     if (script.endsWith(', ')) {
