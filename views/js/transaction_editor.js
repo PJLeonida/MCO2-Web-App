@@ -23,12 +23,13 @@ function showEditAppointmentModal(row) {
     let modal = document.getElementById('editAppointmentModal'); // Edit Modal
     
     // Form fields
-    let typefield    = editform.querySelector('#type');
-    let virtualfield = editform.querySelector('#virtual');
-    let statusfield  = editform.querySelector('#status');
-    let regionfield  = editform.querySelector('#region');
-
-    const id = row.cells[0].data; // Data from the table
+    const typefield    = editform.querySelector('#type');
+    const virtualfield = editform.querySelector('#virtual');
+    const statusfield  = editform.querySelector('#status');
+    const regionfield  = editform.querySelector('#region');
+    
+    const id = row.cells[0].data;                                   // Data from the table
+    const deleteButton = document.getElementById('deleteButton');   // Delete Button
 
     modal.classList.remove('hidden');
     modal.classList.add('flex');
@@ -39,6 +40,10 @@ function showEditAppointmentModal(row) {
     virtualfield.value = row.cells[7].data;
     statusfield.value = row.cells[5].data;
     regionfield.value = row.cells[3].data;
+
+    deleteButton.onclick = function() {
+        editform.action = '/delete/' + id;
+    };
 
     console.log(id)
     editform.action = '/edit/' + id;

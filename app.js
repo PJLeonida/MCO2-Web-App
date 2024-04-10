@@ -461,14 +461,27 @@ app.post('/edit/:id', async (req, res) => {
 });
 
 // DELETE APPOINTMENT
-app.delete('/delete/:id', async (req, res) => {
+app.post('/delete/:id', async (req, res) => {
+    const id = req.params.id;
+
     try {
-        const { id } = req.params;
-        await deleteDataFromTable(req, res, 'central', id);
-    } catch (error) {
+        centralNode.query('DELETE FROM appointments WHERE apptid = ?', [id], (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+        })
+    } catch (e) {
+        
+        // add try for other nodes
+        
         console.error('Error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+
+
+    console.log("DELETED")
+    res.status(200)
+    res.redirect('/appointments');
 });
 
 app.listen(port, () => {
