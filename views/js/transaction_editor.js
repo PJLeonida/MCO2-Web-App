@@ -241,6 +241,10 @@ async function reloadAppointment() {
     try {
         let searchInput = document.getElementById('search_item');
         let appointmentID = searchInput.value; // Get the value of the input field
+        if (appointmentID === '') {
+            showInitialTable();
+            return;
+        }
         container = document.getElementById('apts-search-table');
         let appointmentsJSON = await getAppointment(appointmentID); // Await the promise
         loadAppointmentGrid(appointmentsJSON, 'search-table-container');
@@ -249,16 +253,11 @@ async function reloadAppointment() {
     }
     document.getElementById('initial-table-container').classList.add('hidden');
     document.getElementById('search-table-container').classList.remove('hidden');
-    document.getElementById('revert-button').classList.remove('hidden');
 }
 
 function showInitialTable() {
     document.getElementById('initial-table-container').classList.remove('hidden');
     document.getElementById('search-table-container').classList.add('hidden');
-    document.getElementById('revert-button').classList.add('hidden');
-    document.getElementById('search-button').classList.remove('hidden');
-    let container = document.getElementById('search-table-container');
-    container.innerHTML = '';
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
