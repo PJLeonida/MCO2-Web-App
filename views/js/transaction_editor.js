@@ -132,7 +132,17 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
             formatter: (cell) => cell ? 'Yes' : 'No'
         }, {
             id: 'island',
-            name: 'Island'
+            name: 'Island',
+            filter: {
+                type: 'select', // Use a select dropdown for filtering
+                config: {
+                    data: [
+                        { value: 'Luzon', label: 'Luzon' },
+                        { value: 'Visayas', label: 'Visayas' },
+                        { value: 'Mindanao', label: 'Mindanao' }
+                    ]
+                }
+            }
         }, {
             name: 'Actions',
             formatter: (cell, row) => {
@@ -142,6 +152,7 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
                 }, 'Edit');
             }
         }],
+        //search: true, --- search function from gridjs library DD:
         pagination: {
             limit: 30
         },
@@ -200,7 +211,17 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
             formatter: (cell) => cell ? 'Yes' : 'No'
         }, {
             id: 'island',
-            name: 'Island'
+            name: 'Island',
+            filter: {
+                type: 'select', // Use a select dropdown for filtering
+                config: {
+                    data: [
+                        { value: 'Luzon', label: 'Luzon' },
+                        { value: 'Visayas', label: 'Visayas' },
+                        { value: 'Mindanao', label: 'Mindanao' }
+                    ]
+                }
+            }
         }, {
             name: 'Actions',
             formatter: (cell, row) => {
@@ -210,6 +231,7 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
                 }, 'Edit');
             }
         }],
+        //search: true, --- search function from gridjs library DD:
         pagination: {
             limit: 30
         },
