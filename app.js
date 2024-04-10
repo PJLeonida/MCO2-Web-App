@@ -1,11 +1,3 @@
-// import mysql from 'mysql2'
-
-// const pool = mysql.createPool({
-//     host: '127.0.0.1',
-//     user: 'root',
-//     password: '',
-//     database: 'mco2'
-// }).promise()
 
 // const [result] = await pool.query("SELECT * FROM test_db LIMIT 1")
 // console.log(result[0])
@@ -64,6 +56,8 @@ import { connect } from 'http2';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
+import mysql from 'mysql2'
+
 
 const app = express();
 const port = 3000;
@@ -76,6 +70,15 @@ const viewsPath = path.join(__dirname, 'views');
 
 // Serve static files from the 'views' directory
 app.use(express.static(viewsPath));
+
+// CORS Middleware (allows our application to do cross-domain transfers (since we're accessing remote servers))
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+
 
 // DATABASE CONNECTIONS
 
@@ -328,6 +331,42 @@ app.get('/', async (req, res) => {
         console.error('Error:', error);
     }
 });
+
+
+// APPOINTMENTS PAGE ROUTE
+app.get('/appointments', async (req, res) => {
+    try {
+
+        res.sendFile(path.join(viewsPath, 'transaction_editor', 'transaction_editor.html'));
+    } catch (error) {
+        console.error('Error', error);
+    }
+})
+
+// GET ALL APPOINTMENTS
+app.get('/get-appointments', async (req, res) => {
+
+
+    // if CENTRAL NODE ALIVE Try querying central node first.
+    try {
+        centralNode.query('SELECT * FROM appointments', (error, results, fields) => {
+            if (error) {
+                console.error('Error executing query:', error);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+    
+            // Send feteched data as JSON response
+            res.json(results); 
+        })
+    } catch (error) {
+        console.log('Error querying central node: ', error);
+    }
+
+    // ELSE, QUERY SECONDARY NODE
+
+    
+})
 
 // ADD APPOINTMENT
 app.get('/add', async (req, res) => {
