@@ -349,18 +349,25 @@ app.get('/appointments', async (req, res) => {
 
 // GET ALL APPOINTMENTS
 app.get('/get-appointments', async (req, res) => {
-    // Try querying central node first.
-    
-    centralNode.query('SELECT * FROM appointments LIMIT 100 OFFSET 950', (error, results, fields) => {
-        if (error) {
-            console.error('Error executing query:', error);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
 
-        // Send feteched data as JSON response
-        res.json(results); 
-    })
+
+    // if CENTRAL NODE ALIVE Try querying central node first.
+    try {
+        centralNode.query('SELECT * FROM appointments', (error, results, fields) => {
+            if (error) {
+                console.error('Error executing query:', error);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+            // Send feteched data as JSON response
+            res.json(results); 
+        })
+    } catch (error) {
+        console.log('Error querying central node: ', error);
+    }
+
+    // ELSE, QUERY SECONDARY NODE
+
     
 })
 

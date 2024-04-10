@@ -52,8 +52,6 @@
             <!-- Search bars -->
             <div class="ml-auto">
                 <input type="text" placeholder="Search by Apt. ID" class="px-4 mr-16 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-teal-500">
-                <input type="text" placeholder="Search by Patient ID" class="px-4 mr-16 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-teal-500">
-                <input type="text" placeholder="Search by clinic" class="px-4 mr-16 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-teal-500">
             </div>
             
         </nav>
@@ -103,6 +101,7 @@
             <div class="bg-white rounded shadow-md p-8 w-[40%]">
                 <h2 class="text-2xl font-bold mb-4 text-smdp-500">Add new appointment</h2>
                 <form id="appointments-form" method="POST" action="/add">
+
                     <div class="mb-4">
                         <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
                         <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
@@ -145,7 +144,6 @@
                 </form>
             </div>
         </div>
-        
 
         <!--Edit Modal-->
         <div id="editAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
