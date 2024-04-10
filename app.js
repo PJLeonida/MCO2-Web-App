@@ -55,7 +55,7 @@ import { createPool } from 'mysql2';
 import { connect } from 'http2';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+import path, { dirname, parse } from 'path';
 import mysql from 'mysql2'
 
 
@@ -308,6 +308,91 @@ async function deleteDataFromTable(req, res, node, id) {
     }
 }
 
+function getRegionIsland(region) {
+    const regionNum = parseInt(region);
+    var island = "";
+
+    if (regionNum >= 1 && regionNum <= 8) {
+        island = "Luzon"
+    } else if (regionNum >= 9 && regionNum <= 11) {
+        island = "Visayas"
+    } else if (regionNum >= 12 && regionNum <= 17) {
+        island = "Mindanao"
+    } else {
+        island = "";
+    }
+
+    return island
+}
+
+// FUNCTION TO AUTOMATICALLY DETERMINE REGION NAME AND ISLAND BASED ON NUMBER.
+function getRegionName(region) {
+    
+    const regionNum = parseInt(region);
+    var regionName = "";
+    
+    switch (regionNum) {
+        case 1:
+            regionName = 'Ilocos Region (I)';
+            break;
+        case 2:
+            regionName = 'Cagayan Valley (II)';
+            break;
+        case 3:
+            regionName = 'Central Luzon (III)';
+            break;
+        case 4:
+            regionName = 'CALABARZON (IV-A))';
+            break;
+        case 5:
+            regionName = 'MIMAROPA (IV-B';
+            break;
+        case 6:
+            regionName = 'Bicol Region (V)';
+            break;
+        case 7:
+            regionName = 'Cordillera Administrative Region (CAR)';
+            break;
+        case 8:
+            regionName = 'National Capital Region (NCR)';
+            break;
+        case 9:
+            regionName = 'Western Visayas (VI)';
+            break;
+        case 10:
+            regionName = 'Central Visayas (VII)';
+            break;
+        case 11:
+            regionName = 'Eastern Visayas (VIII)';
+            break;
+        case 12:
+            regionName = 'Zamboanga Peninsula (IX)';
+            break;
+        case 13:
+            regionName = 'Northern Mindanao (X)';
+            break;
+        case 14:
+            regionName = 'Davao Region (XI)';
+            break;
+        case 15:
+            regionName = 'SOCCSKSARGEN (Cotabato Region) (XII)';
+            break;
+        case 16:
+            regionName = 'Caraga (XIII)';
+            break;
+        case 17:
+            regionName = 'Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)';
+            break;
+        default:
+            regionName = "";
+            break;
+
+        }
+
+    return regionName;
+}
+
+
 // SERVER ROUTES
 /*
     Add Appointment
@@ -377,14 +462,17 @@ app.post('/add', async (req, res) => {
     // TODO: For now request body is incomplete
     const { apptid, virtual, region, schedule } = req.body;
     const status = "Queued";
+
+    const regionName = getRegionName(region);
+    const regionIsland = getRegionIsland(region);
+
     await testConnections();
     // Do log check 
     
     // Add appointment to database
     try {
-        // Island should be automatic
         // Also add apptid
-        centralNode.query('INSERT INTO appointments (apptid, isVirtual, region, StartTime, status) VALUES (?, ?, ?, ?, ?);', [apptid, virtual, region, schedule, status], (error, results, fields) => {
+        centralNode.query('INSERT INTO appointments (apptid, isVirtual, region, island, StartTime, status) VALUES (?, ?, ?, ?, ?, ?);', [apptid, virtual, regionName, regionIsland, schedule, status], (error, results, fields) => {
             if (error) {
                 throw error;
             }
@@ -413,7 +501,6 @@ app.post('/edit/:id', async (req, res) => {
     // Get request body
     const params = req.params;
     const { virtual, status, schedule } = req.body;
-    
     // Do log functions
     
     // If each of the values exist, build the SQL script
@@ -431,7 +518,6 @@ app.post('/edit/:id', async (req, res) => {
         script += "StartTime = ?, ";
         values.push(schedule);
     }
-
 
     // Remove the last comma and space
     if (script.endsWith(', ')) {

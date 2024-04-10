@@ -96,7 +96,7 @@ function loadAppointmentGrid(appointmentsJSON) {
             id: 'region',
             name: 'Region'
         }, {
-            id: 'QueueDate',
+            id: 'StartTime',
             name: 'Schedule',
             formatter: (cell) => new Date(cell).toLocaleDateString()
         }, {
@@ -126,6 +126,7 @@ function loadAppointmentGrid(appointmentsJSON) {
             limit: 30
         },
         resizable: true,
+        sort: true,
         data: appointmentsJSON,
         className: {
             table: 'shadow mt-4',
