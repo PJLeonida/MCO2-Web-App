@@ -19,13 +19,14 @@ function hideAddAppointmentModal() {
 // 8 Island
 // 6 Type
 function showEditAppointmentModal(row) {
+    console.log(row);
     let editform = document.getElementById('editAppointments'); // Get the form
     let modal = document.getElementById('editAppointmentModal'); // Edit Modal
     
     // Form fields
     const virtualfield = editform.querySelector('#virtual');
     const statusfield  = editform.querySelector('#status');
-    const regionfield  = editform.querySelector('#region');
+    const schedulefield  = editform.querySelector('#schedule');
     
     const id = row.cells[0].data;                                   // Data from the table
     const deleteButton = document.getElementById('deleteButton');   // Delete Button
@@ -37,7 +38,7 @@ function showEditAppointmentModal(row) {
     // populate forms 
     virtualfield.value = row.cells[7].data;
     statusfield.value = row.cells[5].data;
-    regionfield.value = row.cells[3].data;
+    schedulefield.value = new Date(row.cells[4].data).toLocaleDateString();
 
     deleteButton.onclick = function() {
         editform.action = '/delete/' + id;

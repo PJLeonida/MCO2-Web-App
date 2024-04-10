@@ -375,9 +375,8 @@ app.get('/get-appointments', async (req, res) => {
 app.post('/add', async (req, res) => {
     // Get request body
     // TODO: For now request body is incomplete
-    const { type, virtual, region } = req.body;
-    const apptid = "11111111111111111111222222222222";
-
+    const { apptid, virtual, region, schedule } = req.body;
+    const status = "Queued";
     await testConnections();
     // Do log check 
     
@@ -385,8 +384,7 @@ app.post('/add', async (req, res) => {
     try {
         // Island should be automatic
         // Also add apptid
-        console.log(type, virtual, region)
-        centralNode.query('INSERT INTO appointments (apptid, type, isVirtual, region) VALUES (?, ?, ?, ?);', [apptid, type, virtual, region], (error, results, fields) => {
+        centralNode.query('INSERT INTO appointments (apptid, isVirtual, region, StartTime, status) VALUES (?, ?, ?, ?, ?);', [apptid, virtual, region, schedule, status], (error, results, fields) => {
             if (error) {
                 throw error;
             }
@@ -414,7 +412,7 @@ app.post('/add', async (req, res) => {
 app.post('/edit/:id', async (req, res) => {
     // Get request body
     const params = req.params;
-    const { virtual, status, region } = req.body;
+    const { virtual, status, schedule } = req.body;
     
     // Do log functions
     
@@ -429,10 +427,11 @@ app.post('/edit/:id', async (req, res) => {
         script += "status = ?, ";
         values.push(status);
     } 
-    if (region) {
-        script += "region = ?, ";
-        values.push(region);
-    } 
+    if (schedule) {
+        script += "StartTime = ?, ";
+        values.push(schedule);
+    }
+
 
     // Remove the last comma and space
     if (script.endsWith(', ')) {

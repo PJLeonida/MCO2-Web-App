@@ -68,12 +68,9 @@
             <div class="bg-white rounded shadow-md p-8 w-[40%]">
                 <h2 class="text-2xl font-bold mb-4 text-smdp-500">Add new appointment</h2>
                 <form id="appointments-form" method="POST" action="/add">
-
                     <div class="mb-4">
-                        <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
-                        <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
-                            <option value="Consultation">Consultation</option>
-                        </select>
+                        <label for="apptid" class="block text-sm font-semibold mb-2">Appointment ID</label>
+                        <input type="text" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" id="apptid" name="apptid">
                     </div>
                     <div class="mb-4">
                         <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
@@ -103,6 +100,10 @@
                             <option value="Caraga (XIII)">Caraga (XIII)</option>
                             <option value="Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
                         </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="schedule" class="block text-sm font-semibold mb-2">Schedule</label>
+                        <input type="date" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" id="schedule" name="schedule">
                     </div>
                     <div class="flex justify-between">
                         <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
@@ -136,26 +137,8 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
-                        <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
-                            <option value="Ilocos Region (I)">Ilocos Region (I)</option>
-                            <option value="Cagayan Valley (II)">Cagayan Valley (II)</option>
-                            <option value="Central Luzon (III)">Central Luzon (III)</option>
-                            <option value="CALABARZON (IV-A)">CALABARZON (IV-A)</option>
-                            <option value="MIMAROPA (IV-B)">MIMAROPA (IV-B)</option>
-                            <option value="Bicol Region (V)">Bicol Region (V)</option>
-                            <option value="Cordillera Administrative Region (CAR)">Cordillera Administrative Region (CAR)</option>
-                            <option value="National Capital Region (NCR)">National Capital Region (NCR)</option>
-                            <option value="Western Visayas (VI)">Western Visayas (VI)</option>
-                            <option value="Central Visayas (VII)">Central Visayas (VII)</option>
-                            <option value="Eastern Visayas (VIII)">Eastern Visayas (VIII)</option>
-                            <option value="Zamboanga Peninsula (IX)">Zamboanga Peninsula (IX)</option>
-                            <option value="Northern Mindanao (X)">Northern Mindanao (X)</option>
-                            <option value="Davao Region (XI)">Davao Region (XI)</option>
-                            <option value="SOCCSKSARGEN (Cotabato Region) (XII)">SOCCSKSARGEN (Cotabato Region) (XII)</option>
-                            <option value="Caraga (XIII)">Caraga (XIII)</option>
-                            <option value="Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
-                        </select>
+                        <label for="schedule" class="block text-sm font-semibold mb-2">Schedule</label>
+                        <input id="schedule" type="date" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" id="schedule" name="schedule">
                     </div>
                     <div class="flex justify-end"></div>
                         <button onclick="hideEditAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
