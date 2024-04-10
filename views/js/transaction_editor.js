@@ -13,6 +13,7 @@ function hideAddAppointmentModal() {
 }
 
 function showEditAppointmentModal() {
+    console.log('hi!');
     let modal = document.getElementById('editAppointmentModal');
     modal.classList.remove('hidden');
     modal.classList.add('flex');
@@ -91,6 +92,14 @@ function loadAppointmentGrid(appointmentsJSON) {
         }, {
             id: 'island',
             name: 'Island'
+        }, {
+            name: 'Actions',
+            formatter: (cell, row) => {
+                return gridjs.h('button', {
+                    className: 'bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded',
+                    onClick: showEditAppointmentModal
+                }, 'Edit');
+            }
         }],
         pagination: {
             limit: 30
