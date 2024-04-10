@@ -43,7 +43,7 @@ function showEditAppointmentModal(row) {
     schedulefield.value = new Date(row.cells[4].data).toLocaleDateString();
 
     deleteButton.onclick = function() {
-        editform.action = '/delete/' + id;
+        editform.action = '/delete/' + id + '?region=' + encodeURIComponent(region) + '&island=' + encodeURIComponent(island);
     };
 
     console.log(id)

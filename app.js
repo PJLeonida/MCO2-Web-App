@@ -529,9 +529,9 @@ async function redoDeleteTransaction(transaction, region) {
             
             try {
                 console.log("region: " + region);
-                if (region === 'luzon') {
+                if (region === 'Luzon') {
                     secondaryNodeConnection = await util.promisify(luzonNode.getConnection).bind(luzonNode)();
-                } else if (region === 'visayas' || region === 'mindanao') {
+                } else if (region === 'Visayas' || region === 'Mindanao') {
                     secondaryNodeConnection = await util.promisify(visayasMindanaoNode.getConnection).bind(visayasMindanaoNode)();
                 }
             } catch (error) {
@@ -570,13 +570,13 @@ async function redoDeleteTransaction(transaction, region) {
 
             try {
                 querySecondary = util.promisify(secondaryNodeConnection.query).bind(secondaryNodeConnection);
-                result = await querySecondary('SELECT * FROM appointments_visayas_mindanao WHERE apptid = ?', transaction.apptid)
+                result = await querySecondary('SELECT * FROM appointments WHERE apptid = ?', transaction.apptid)
 
                 if (result.length > 0) {
                     console.log('Rows returned:', result.length);
                     result = await Promise.all([
                         querySecondary('START TRANSACTION'),
-                        querySecondary('DELETE FROM appointments_visayas_mindanao WHERE apptid = ?', transaction.apptid),
+                        querySecondary('DELETE FROM appointments WHERE apptid = ?', transaction.apptid),
                         querySecondary('COMMIT')
                     ]);
                 } 
@@ -591,7 +591,7 @@ async function redoDeleteTransaction(transaction, region) {
 
             //
             let finalResultPrimary = await queryPrimary('SELECT * FROM appointments WHERE apptid = ?', transaction.apptid)
-            let finalResultSecondary = await querySecondary('SELECT * FROM appointments_visayas_mindanao WHERE apptid = ?', transaction.apptid)
+            let finalResultSecondary = await querySecondary('SELECT * FROM appointments WHERE apptid = ?', transaction.apptid)
             
             if(finalResultPrimary == 0 && finalResultSecondary == 0) {
                 resolve(true);
@@ -712,7 +712,7 @@ async function addDataToTable(req, res, node) {
             try {
                 // check secondary node
                 querySecondary = util.promisify(secondaryNodeConnection.query).bind(secondaryNodeConnection);
-                result = await querySecondary('SELECT * FROM appointments_visayas_mindanao WHERE apptid = ?', transaction.apptid)
+                result = await querySecondary('SELECT * FROM appointments WHERE apptid = ?', transaction.apptid)
 
                 if (result.length > 0) {
                     console.log('Rows returned:', result.length);
@@ -722,7 +722,7 @@ async function addDataToTable(req, res, node) {
                     console.log('No rows returned');
                     result = await Promise.all([
                         querySecondary('START TRANSACTION'),
-                        querySecondary('INSERT INTO appointments_visayas_mindanao (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, StartTime, EndTime, type, isVirtual, island, clinic, region) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+                        querySecondary('INSERT INTO appointments (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, StartTime, EndTime, type, isVirtual, island, clinic, region) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                         [
                             transaction.pxid, 
                             transaction.clinicid, 
@@ -768,7 +768,7 @@ async function addDataToTable(req, res, node) {
             )
 
             let finalResultSecondary = await querySecondary(
-                'SELECT * FROM appointments_visayas_mindanao WHERE pxid = ? AND clinicid = ? AND doctorid = ? AND apptid = ? AND status = ? AND TimeQueued = ? AND QueueDate = ? AND StartTime = ? AND EndTime = ? AND type = ? AND isVirtual = ? AND island = ? AND clinic = ? AND region = ?',
+                'SELECT * FROM appointments WHERE pxid = ? AND clinicid = ? AND doctorid = ? AND apptid = ? AND status = ? AND TimeQueued = ? AND QueueDate = ? AND StartTime = ? AND EndTime = ? AND type = ? AND isVirtual = ? AND island = ? AND clinic = ? AND region = ?',
                 [
                     transaction.pxid, 
                     transaction.clinicid, 
@@ -1254,65 +1254,152 @@ app.post('/edit/:id', async (req, res) => {
         // call actual transaction here
         // ...
 
-        const { apptid, virtual, region, schedule } = req.body;
-        const status = "Queued";
+        // transaction here
+        // ... 
+        // call actual transaction here
+        // ...
 
-        const regionName = await util.promisify(getRegionName)(region);
-        const regionIsland = await util.promisify(getRegionIsland)(region);
+        const { virtual, status, schedule } = req.body;
 
+        const id = req.params.id;
+        const region = req.query.region; 
+        const island = req.query.island;
+
+        console.log("")
+
+        console.log('DOING THE TRANSACTION');
         await testConnections();
         
         const transaction = {
-            action: "add",
-            apptid: apptid,
+            action: "edit",
+            apptid: id,
             status: status,
             StartTime: schedule,
             isVirtual: virtual,
-            island: regionIsland,
-            region: regionName
+            island: island,
+            region: region
         };
 
         // save transaction change to log file
         addToLog(transaction, transaction.island);
-
-        let result = await redoAddTransaction(transaction, transaction.island);
+        
+        let result = await redoEditTransaction(transaction, transaction.island);
 
         if (result) {
-            console.log('Add successful');
+            console.log('Edit successful');
             // Call the function to remove transaction from log file
             removeFromLog(transaction);
+            res.redirect('/appointments');
         }
         else {
-            console.log('Add failed');
+            console.log('Edit failed');
+            res.redirect('/appointments');
         }
-
-        // Redirect to root to appointments directory
-        res.redirect('/appointments');
     }
 });
 
 // DELETE APPOINTMENT
 app.post('/delete/:id', async (req, res) => {
-    const id = req.params.id;
+    // Get request body
+    
+    // Do log functions
+    
+    const logIsEmpty = await checkLogIsEmpty();
+        
+    // if i want to do transactions of a visayas appointment
+    if(logIsEmpty) {
+        console.log('Log is empty, no recovery needed. Proceeding with transaction...');
 
-    try {
-        centralNode.query('DELETE FROM appointments WHERE apptid = ?', [id], (error, results, fields) => {
-            if (error) {
-                throw error;
-            }
-        })
-    } catch (e) {
+        // transaction here
+        // ... 
+        // call actual transaction here
+        // ...
+
+        const { virtual, status, schedule } = req.body;
+
+        const id = req.params.id;
+        const region = req.query.region;
+        const island = req.query.island;
+
+        console.log("")
+
+        console.log('DOING THE TRANSACTION');
+        await testConnections();
         
-        // add try for other nodes
+        const transaction = {
+            action: "delete",
+            apptid: id,
+            region: region,
+            island: island
+        };
+
+        // save transaction change to log file
+        addToLog(transaction, transaction.island);
         
-        console.error('Error:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        let result = await redoDeleteTransaction(transaction, transaction.island);
+
+        if (result) {
+            console.log('Delete successful');
+            // Call the function to remove transaction from log file
+            removeFromLog(transaction);
+            res.redirect('/appointments');
+        }
+        else {
+            console.log('Delete failed');
+            res.redirect('/appointments');
+        }
+
+        // Redirect to root to appointments directory
+        
     }
+    else {
+        console.log('Proceeding with recovery...');
+        await performRecovery();
 
+        // call actual transaction here
+        // ...
 
-    console.log("DELETED")
-    res.status(200)
-    res.redirect('/appointments');
+        console.log('Log is empty, no recovery needed. Proceeding with transaction...');
+
+        // transaction here
+        // ... 
+        // call actual transaction here
+        // ...
+
+        const { virtual, status, schedule } = req.body;
+
+        const id = req.params.id;
+        const region = req.query.region;
+        const island = req.query.island;
+
+        console.log("")
+
+        console.log('DOING THE TRANSACTION');
+        await testConnections();
+        
+        const transaction = {
+            action: "delete",
+            apptid: id,
+            region: region,
+            island: island
+        };
+
+        // save transaction change to log file
+        addToLog(transaction, transaction.island);
+        
+        let result = await redoDeleteTransaction(transaction, transaction.island);
+
+        if (result) {
+            console.log('Delete successful');
+            // Call the function to remove transaction from log file
+            removeFromLog(transaction);
+            res.redirect('/appointments');
+        }
+        else {
+            console.log('Delete failed');
+            res.redirect('/appointments');
+        }
+    }
 });
 
 app.listen(port, () => {
