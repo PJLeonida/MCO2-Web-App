@@ -91,13 +91,14 @@ function loadAppointmentGrid(appointmentsJSON) {
             formatter: () => {
                 return gridjs.h('button', {
                     className: 'bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded',
-                    onClick: showEditAppointmentModal
+                    onClick: () => showEditAppointmentModal()
                 }, 'Edit');
             }
         }],
         pagination: {
             limit: 30
         },
+        resizable: true,
         data: appointmentsJSON,
         className: {
             table: 'shadow mt-4',
