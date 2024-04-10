@@ -77,6 +77,11 @@ const viewsPath = path.join(__dirname, 'views');
 // Serve static files from the 'views' directory
 app.use(express.static(viewsPath));
 
+
+// Middleware for JSON parsing and URL-encoding
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // DATABASE CONNECTIONS
 
 // central node database connection
@@ -166,8 +171,7 @@ function addToLog(log) {
 
 //
 async function addDataToTable(req, res, node) {
-  //const data = req.body;   **CHANGE IT TO THIS ONE WHEN THE TIME COMES
-    const data = 1;
+    const data = req.body;  
 
     if(node == 'central') {
         const nodeConnection = await util.promisify(centralNode.getConnection).bind(secondaryNode)();
@@ -330,17 +334,33 @@ app.get('/', async (req, res) => {
 });
 
 // ADD APPOINTMENT
-app.get('/add', async (req, res) => {
+app.post('/add', async (req, res) => {
+    // Get request body
+    // TODO: For now request body is incomplete
+    const { type, virtual, region } = req.body;
+    const patientID = "00000000000000000000000000000000";
+
+    await testConnections();
+    // Do log check 
+    
+    // Add appointment to database
     try {
-        await addDataToTable(req, res, 'central');
+        console.log(type, virtual, region)
+        luzonNode.query('INSERT INTO appointments_luzon (pxid, type, isVirtual, region) VALUES (?, ?, ?, ?);', [patientID, type, virtual, region], (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+        })
     } catch (error) {
-
+        
         // add try for other nodes
-
+        
         console.error('Error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-    console.log('Query uncommitted');
+
+    // Redirect to root to appointments directory
+    res.redirect('/');
 });
 
 // EDIT APPOINTMENT
