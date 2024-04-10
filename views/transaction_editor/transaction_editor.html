@@ -6,7 +6,8 @@
         <title>Document</title>
         <link rel="stylesheet" href="..\output.css">
         <link rel="stylesheet" href="..\additional.css">
-        <script src="../js/transaction_editor.js"> </script>
+        <!-- Stylesheet for Grid.js -->
+        <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
 </head>
 <body class="bg-gray-100">
         <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">
@@ -47,53 +48,6 @@
                     Create New
                 </button>
             </ul>
-            <!--Add Modal-->
-            <div id="addAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
-                <div class="bg-white rounded shadow-md p-8 w-[40%]">
-                    <h2 class="text-2xl font-bold mb-4 text-smdp-500">Add new appointment</h2>
-                    <form id="appointments-form" method="POST" action="/add">
-                        <div class="mb-4">
-                            <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
-                            <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
-                                <option value="1">Consultation</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
-                            <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="True or False">
-                                <option value="1">True</option>
-                                <option value="0">False</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
-                            <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
-                                <option value="1">Ilocos Region (I)</option>
-                                <option value="2">Cagayan Valley (II)</option>
-                                <option value="3">Central Luzon (III)</option>
-                                <option value="4">CALABARZON (IV-A)</option>
-                                <option value="5">MIMAROPA (IV-B)</option>
-                                <option value="6">Bicol Region (V)</option>
-                                <option value="7">Cordillera Administrative Region (CAR)</option>
-                                <option value="8">National Capital Region (NCR)</option>
-                                <option value="9">Western Visayas (VI)</option>
-                                <option value="10">Central Visayas (VII)</option>
-                                <option value="11">Eastern Visayas (VIII)</option>
-                                <option value="12">Zamboanga Peninsula (IX)</option>
-                                <option value="13">Northern Mindanao (X)</option>
-                                <option value="14">Davao Region (XI)</option>
-                                <option value="15">SOCCSKSARGEN (Cotabato Region) (XII)</option>
-                                <option value="16">Caraga (XIII)</option>
-                                <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-between">
-                            <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
-                            <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
             <!-- Search bars -->
             <div class="ml-auto">
@@ -105,6 +59,9 @@
         </nav>
     </div>
 
+    <div class="p-14">
+        <div id="apts-table" class="flex justify-center"></div>
+    </div>
 
     <div class="flex justify-center">
         
@@ -140,11 +97,61 @@
                 </tr>
             </tbody>
         </table>
+
+        <!--Add Modal-->
+        <div id="addAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
+            <div class="bg-white rounded shadow-md p-8 w-[40%]">
+                <h2 class="text-2xl font-bold mb-4 text-smdp-500">Add new appointment</h2>
+                <form id="appointments-form" method="POST" action="/add">
+                    <div class="mb-4">
+                        <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
+                        <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
+                            <option value="1">Consultation</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="virtual" class="block text-sm font-semibold mb-2">Virtual:</label>
+                        <select id="virtual" name="virtual" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="True or False">
+                            <option value="1">True</option>
+                            <option value="0">False</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="region" class="block text-sm font-semibold mb-2">Region:</label>
+                        <select id="region" name="region" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" rows="4" placeholder="**turn into dropdown**">
+                            <option value="1">Ilocos Region (I)</option>
+                            <option value="2">Cagayan Valley (II)</option>
+                            <option value="3">Central Luzon (III)</option>
+                            <option value="4">CALABARZON (IV-A)</option>
+                            <option value="5">MIMAROPA (IV-B)</option>
+                            <option value="6">Bicol Region (V)</option>
+                            <option value="7">Cordillera Administrative Region (CAR)</option>
+                            <option value="8">National Capital Region (NCR)</option>
+                            <option value="9">Western Visayas (VI)</option>
+                            <option value="10">Central Visayas (VII)</option>
+                            <option value="11">Eastern Visayas (VIII)</option>
+                            <option value="12">Zamboanga Peninsula (IX)</option>
+                            <option value="13">Northern Mindanao (X)</option>
+                            <option value="14">Davao Region (XI)</option>
+                            <option value="15">SOCCSKSARGEN (Cotabato Region) (XII)</option>
+                            <option value="16">Caraga (XIII)</option>
+                            <option value="17">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="hideAddAppointmentModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-smdp-500 font-bold py-2 px-4 rounded">Cancel</button>
+                        <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+
         <!--Edit Modal-->
         <div id="editAppointmentModal" class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
             <div class="bg-white rounded shadow-md p-8 w-[40%]">
                 <h2 class="text-2xl font-bold mb-4 text-smdp-500">Edit appointment</h2>
-                <form>
+                <form id="editAppointments" method="POST" action="#">
                     <div class="mb-4">
                         <label for="type" class="block text-sm font-semibold mb-2">Type:</label>
                         <select id="type" name="type" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-teal-500" placeholder="type">
@@ -200,5 +207,9 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript at bottom of body so everything else loads first. -->
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script src="../js/transaction_editor.js"> </script>
 </body>
 </html>

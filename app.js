@@ -1,11 +1,3 @@
-// import mysql from 'mysql2'
-
-// const pool = mysql.createPool({
-//     host: '127.0.0.1',
-//     user: 'root',
-//     password: '',
-//     database: 'mco2'
-// }).promise()
 
 // const [result] = await pool.query("SELECT * FROM test_db LIMIT 1")
 // console.log(result[0])
@@ -64,6 +56,8 @@ import { connect } from 'http2';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
+import mysql from 'mysql2'
+
 
 const app = express();
 const port = 3000;
@@ -81,6 +75,15 @@ app.use(express.static(viewsPath));
 // Middleware for JSON parsing and URL-encoding
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// CORS Middleware (allows our application to do cross-domain transfers (since we're accessing remote servers))
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+
 
 // DATABASE CONNECTIONS
 
@@ -333,20 +336,50 @@ app.get('/', async (req, res) => {
     }
 });
 
+
+// APPOINTMENTS PAGE ROUTE
+app.get('/appointments', async (req, res) => {
+    try {
+
+        res.sendFile(path.join(viewsPath, 'transaction_editor', 'transaction_editor.html'));
+    } catch (error) {
+        console.error('Error', error);
+    }
+})
+
+// GET ALL APPOINTMENTS
+app.get('/get-appointments', async (req, res) => {
+    // Try querying central node first.
+    
+    centralNode.query('SELECT * FROM appointments LIMIT 100 OFFSET 950', (error, results, fields) => {
+        if (error) {
+            console.error('Error executing query:', error);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        // Send feteched data as JSON response
+        res.json(results); 
+    })
+    
+})
+
 // ADD APPOINTMENT
 app.post('/add', async (req, res) => {
     // Get request body
     // TODO: For now request body is incomplete
     const { type, virtual, region } = req.body;
-    const patientID = "00000000000000000000000000000000";
+    const apptid = "11111111111111111111222222222222";
 
     await testConnections();
     // Do log check 
     
     // Add appointment to database
     try {
+        // Island should be automatic
+        // Also add apptid
         console.log(type, virtual, region)
-        luzonNode.query('INSERT INTO appointments_luzon (pxid, type, isVirtual, region) VALUES (?, ?, ?, ?);', [patientID, type, virtual, region], (error, results, fields) => {
+        centralNode.query('INSERT INTO appointments (apptid, type, isVirtual, region) VALUES (?, ?, ?, ?);', [apptid, type, virtual, region], (error, results, fields) => {
             if (error) {
                 throw error;
             }
@@ -360,7 +393,7 @@ app.post('/add', async (req, res) => {
     }
 
     // Redirect to root to appointments directory
-    res.redirect('/');
+    res.redirect('/appointments');
 });
 
 // EDIT APPOINTMENT
@@ -372,15 +405,59 @@ app.post('/add', async (req, res) => {
 
 */
 
-app.patch('/edit/:id', async (req, res) => {
+app.post('/edit/:id', async (req, res) => {
+    // Get request body
+    const params = req.params;
+    const { type, virtual, status, region } = req.body;
+    
+    // Do log functions
+    
+    // If each of the values exist, build the SQL script
+    let script = "UPDATE appointments SET "
+    let values = [];
+    if (type) {
+        script += "type = ?, ";
+        values.push(type);
+    }   
+    if (virtual) {
+        script += "isVirtual = ?, ";
+        values.push(virtual);
+    }
+    if (status) {
+        script += "status = ?, ";
+        values.push(status);
+    } 
+    if (region) {
+        script += "region = ?, ";
+        values.push(region);
+    } 
+
+    // Remove the last comma and space
+    if (script.endsWith(', ')) {
+        script = script.slice(0, -2);
+    }
+
+    script += " WHERE apptid = ?;";
+    values.push(params.id);
+
+    console.log("SCRIPT: ", script);
+    console.log("VALUES: ", values);
+    // Update the data
     try {
-        const { id } = req.params;
-        const { data } = req.body;
-        await updateDataInTable(req, res, 'central', id, data);
-    } catch (error) {
+        centralNode.query(script, values, (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+        })
+    } catch (e) {
+        
+        // add try for other nodes
+        
         console.error('Error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+
+    res.redirect('/appointments');
 });
 
 // DELETE APPOINTMENT
