@@ -29,6 +29,8 @@ function showEditAppointmentModal(row) {
     const schedulefield  = editform.querySelector('#schedule');
     
     const id = row.cells[0].data;                                   // Data from the table
+    const region = row.cells[3].data;
+    const island = row.cells[8].data;
     const deleteButton = document.getElementById('deleteButton');   // Delete Button
 
     modal.classList.remove('hidden');
@@ -45,7 +47,9 @@ function showEditAppointmentModal(row) {
     };
 
     console.log(id)
-    editform.action = '/edit/' + id;
+    
+    editform.action = '/edit/' + id + '?region=' + encodeURIComponent(region) + '&island=' + encodeURIComponent(island);
+    
 }
 
 function hideEditAppointmentModal() {
