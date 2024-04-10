@@ -347,7 +347,7 @@ app.get('/appointments', async (req, res) => {
 app.get('/get-appointments', async (req, res) => {
     // Try querying central node first.
     
-    centralNode.query('SELECT * FROM appointments LIMIT 100', (error, results, fields) => {
+    centralNode.query('SELECT * FROM appointments LIMIT 1000', (error, results, fields) => {
         if (error) {
             console.error('Error executing query:', error);
             res.status(500).send('Internal Server Error');

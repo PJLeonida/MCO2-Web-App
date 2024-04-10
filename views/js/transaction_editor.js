@@ -55,16 +55,47 @@ async function getAllAppointments() {
     */
 }
 
-function loadAppointmentGrid(appointmentJSON) {
+function loadAppointmentGrid(appointmentsJSON) {
 
+    console.log(`all appointments 1${appointmentsJSON}`);
+
+    console.log(`ALL APPOINTMENTS: ${appointmentsJSON.forEach(appointment => {
+        console.log(`Appointment: ${JSON.stringify(appointment)}`);
+    })}`)
 
     const aptsGrid = new gridjs.Grid({
-        columns: ['Appointment ID', 'Patient ID', 'Clinic ID',
-                  'Region', 'Schedule', 'Status',
-                  'Type', 'Virtual', 'Island'],
-        data: [
-                ['441F9A8E62AA75E437635DBE362C649C','3B8D83483189887A2F1A39D690463A8F','ACB3A881C7CE9ABCAE0CE8C99C86A906','National Capital Region (NCR)','2022-05-23 16:00:00','Queued','Consultation','1','Luzon'],
-            ],
+        columns: [{
+            id: 'apptid',
+            name: 'Appointment ID'
+        }, {
+            id: 'pxid',
+            name: 'Patient ID'
+        }, {
+            id: 'clinicid',
+            name: 'Clinic ID'
+        }, {
+            id: 'region',
+            name: 'Region'
+        }, {
+            id: 'QueueDate',
+            name: 'Schedule'
+        }, {
+            id: 'status',
+            name: 'Status'
+        }, {
+            id: 'type',
+            name: 'Type'
+        }, {
+            id: 'isVirtual',
+            name: 'Virtual'
+        }, {
+            id: 'island',
+            name: 'Island'
+        }],
+        pagination: {
+            limit: 30
+        },
+        data: appointmentsJSON,
         className: {
             table: 'shadow mt-4',
             thead: 'text-white',
@@ -90,11 +121,10 @@ function loadAppointmentGrid(appointmentJSON) {
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const appointmentJSON = await getAllAppointments();
+        const appointmentsJSON = await getAllAppointments();
     
-        if (appointmentJSON) {
-            console.log(`ALL APPOINTMENTS: ${appointmentJSON}`)
-            loadAppointmentGrid(appointmentJSON);
+        if (appointmentsJSON) {
+            loadAppointmentGrid(appointmentsJSON);
         } else {
             console.log('No appointments available');
         }
