@@ -12,12 +12,41 @@ function hideAddAppointmentModal() {
     modal.classList.add('hidden');
 }
 
-function showEditAppointmentModal() {
-    console.log('hi!');
-    let modal = document.getElementById('editAppointmentModal');
+// ROW COLUMNS
+// 3 Region
+// 5 Status
+// 7 Virtual
+// 8 Island
+// 6 Type
+function showEditAppointmentModal(row) {
+    let editform = document.getElementById('editAppointments'); // Get the form
+    let modal = document.getElementById('editAppointmentModal'); // Edit Modal
+    
+    // Form fields
+    const typefield    = editform.querySelector('#type');
+    const virtualfield = editform.querySelector('#virtual');
+    const statusfield  = editform.querySelector('#status');
+    const regionfield  = editform.querySelector('#region');
+    
+    const id = row.cells[0].data;                                   // Data from the table
+    const deleteButton = document.getElementById('deleteButton');   // Delete Button
+
     modal.classList.remove('hidden');
     modal.classList.add('flex');
     modal.classList.add('opacity-100');
+
+    // populate forms 
+    typefield.value = row.cells[6].data;
+    virtualfield.value = row.cells[7].data;
+    statusfield.value = row.cells[5].data;
+    regionfield.value = row.cells[3].data;
+
+    deleteButton.onclick = function() {
+        editform.action = '/delete/' + id;
+    };
+
+    console.log(id)
+    editform.action = '/edit/' + id;
 }
 
 function hideEditAppointmentModal() {
@@ -91,7 +120,7 @@ function loadAppointmentGrid(appointmentsJSON) {
             formatter: () => {
                 return gridjs.h('button', {
                     className: 'bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded',
-                    onClick: () => showEditAppointmentModal()
+                    onClick: () => showEditAppointmentModal(row)
                 }, 'Edit');
             }
         }],

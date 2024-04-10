@@ -71,6 +71,11 @@ const viewsPath = path.join(__dirname, 'views');
 // Serve static files from the 'views' directory
 app.use(express.static(viewsPath));
 
+
+// Middleware for JSON parsing and URL-encoding
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // CORS Middleware (allows our application to do cross-domain transfers (since we're accessing remote servers))
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -169,8 +174,7 @@ function addToLog(log) {
 
 //
 async function addDataToTable(req, res, node) {
-  //const data = req.body;   **CHANGE IT TO THIS ONE WHEN THE TIME COMES
-    const data = 1;
+    const data = req.body;  
 
     if(node == 'central') {
         const nodeConnection = await util.promisify(centralNode.getConnection).bind(secondaryNode)();
@@ -355,7 +359,6 @@ app.get('/get-appointments', async (req, res) => {
                 res.status(500).send('Internal Server Error');
                 return;
             }
-    
             // Send feteched data as JSON response
             res.json(results); 
         })
@@ -369,17 +372,35 @@ app.get('/get-appointments', async (req, res) => {
 })
 
 // ADD APPOINTMENT
-app.get('/add', async (req, res) => {
+app.post('/add', async (req, res) => {
+    // Get request body
+    // TODO: For now request body is incomplete
+    const { type, virtual, region } = req.body;
+    const apptid = "11111111111111111111222222222222";
+
+    await testConnections();
+    // Do log check 
+    
+    // Add appointment to database
     try {
-        await addDataToTable(req, res, 'central');
+        // Island should be automatic
+        // Also add apptid
+        console.log(type, virtual, region)
+        centralNode.query('INSERT INTO appointments (apptid, type, isVirtual, region) VALUES (?, ?, ?, ?);', [apptid, type, virtual, region], (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+        })
     } catch (error) {
-
+        
         // add try for other nodes
-
+        
         console.error('Error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-    console.log('Query uncommitted');
+
+    // Redirect to root to appointments directory
+    res.redirect('/appointments');
 });
 
 // EDIT APPOINTMENT
@@ -391,26 +412,83 @@ app.get('/add', async (req, res) => {
 
 */
 
-app.patch('/edit/:id', async (req, res) => {
+app.post('/edit/:id', async (req, res) => {
+    // Get request body
+    const params = req.params;
+    const { type, virtual, status, region } = req.body;
+    
+    // Do log functions
+    
+    // If each of the values exist, build the SQL script
+    let script = "UPDATE appointments SET "
+    let values = [];
+    if (type) {
+        script += "type = ?, ";
+        values.push(type);
+    }   
+    if (virtual) {
+        script += "isVirtual = ?, ";
+        values.push(virtual);
+    }
+    if (status) {
+        script += "status = ?, ";
+        values.push(status);
+    } 
+    if (region) {
+        script += "region = ?, ";
+        values.push(region);
+    } 
+
+    // Remove the last comma and space
+    if (script.endsWith(', ')) {
+        script = script.slice(0, -2);
+    }
+
+    script += " WHERE apptid = ?;";
+    values.push(params.id);
+
+    console.log("SCRIPT: ", script);
+    console.log("VALUES: ", values);
+    // Update the data
     try {
-        const { id } = req.params;
-        const { data } = req.body;
-        await updateDataInTable(req, res, 'central', id, data);
-    } catch (error) {
+        centralNode.query(script, values, (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+        })
+    } catch (e) {
+        
+        // add try for other nodes
+        
         console.error('Error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+
+    res.redirect('/appointments');
 });
 
 // DELETE APPOINTMENT
-app.delete('/delete/:id', async (req, res) => {
+app.post('/delete/:id', async (req, res) => {
+    const id = req.params.id;
+
     try {
-        const { id } = req.params;
-        await deleteDataFromTable(req, res, 'central', id);
-    } catch (error) {
+        centralNode.query('DELETE FROM appointments WHERE apptid = ?', [id], (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+        })
+    } catch (e) {
+        
+        // add try for other nodes
+        
         console.error('Error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+
+
+    console.log("DELETED")
+    res.status(200)
+    res.redirect('/appointments');
 });
 
 app.listen(port, () => {
