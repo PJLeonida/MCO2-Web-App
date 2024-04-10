@@ -43,17 +43,6 @@ async function getAllAppointments() {
         return null;
     }
 
-    /*
-    fetch('/get-appointments')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        return data;
-    })
-    .catch(error => {
-        console.error('Error fetching appointments', error);
-    })
-    */
 }
 
 function loadAppointmentGrid(appointmentsJSON) {
@@ -70,31 +59,36 @@ function loadAppointmentGrid(appointmentsJSON) {
             name: 'Appointment ID'
         }, {
             id: 'pxid',
-            name: 'Patient ID'
+            name: 'Patient ID',
+            hidden: true
         }, {
             id: 'clinicid',
-            name: 'Clinic ID'
+            name: 'Clinic ID',
+            hidden: true
         }, {
             id: 'region',
             name: 'Region'
         }, {
             id: 'QueueDate',
-            name: 'Schedule'
+            name: 'Schedule',
+            formatter: (cell) => new Date(cell).toLocaleDateString()
         }, {
             id: 'status',
             name: 'Status'
         }, {
             id: 'type',
-            name: 'Type'
+            name: 'Type',
+            hidden: true
         }, {
             id: 'isVirtual',
-            name: 'Virtual'
+            name: 'Virtual',
+            formatter: (cell) => cell ? 'Yes' : 'No'
         }, {
             id: 'island',
             name: 'Island'
         }, {
             name: 'Actions',
-            formatter: (cell, row) => {
+            formatter: () => {
                 return gridjs.h('button', {
                     className: 'bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded',
                     onClick: showEditAppointmentModal
