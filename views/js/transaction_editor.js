@@ -242,13 +242,13 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
 async function reloadAppointment() {
     try {
         let searchInput = document.getElementById('search_item');
-        let appointmentID = searchInput.value; // Get the value of the input field
+        let appointmentID = searchInput.value;
         if (appointmentID === '') {
             showInitialTable();
             return;
         }
         container = document.getElementById('apts-search-table');
-        let appointmentsJSON = await getAppointment(appointmentID); // Await the promise
+        let appointmentsJSON = await getAppointment(appointmentID);
         loadAppointmentGrid(appointmentsJSON, 'search-table-container');
     } catch (error) {
         console.error('Error reloading appointment grid', error);

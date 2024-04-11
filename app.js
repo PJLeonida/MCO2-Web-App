@@ -1084,8 +1084,14 @@ app.get('/get-appointments', async (req, res) => {
     
 })
 
+//Get Appointment
 app.get('/get-appointment/:id', async (req, res) => {
     const id = req.params.id;
+
+    //TODO:
+    // if CENTRAL NODE ALIVE Try querying central node first.
+    // LOG TRANSACTION
+
     try {
         const results = await new Promise((resolve, reject) => {
             centralNode.query('SELECT * FROM appointments WHERE apptid = ?', id, (error, results, fields) => {
