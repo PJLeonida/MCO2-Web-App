@@ -437,7 +437,35 @@ async function redoEditTransaction(transaction, region) {
             }
 
             console.log(transaction);
+
+            let isFoundPrimary;
+            let isFoundSecondary;
             
+            try {
+                const queryPrimary = util.promisify(primaryNodeConnection.query).bind(primaryNodeConnection);
+                isFoundPrimary = await queryPrimary(
+                    'SELECT * FROM appointments WHERE apptid = ?',
+                    [
+                        transaction.apptid
+                    ]
+                );
+            } catch (error) {
+                resolve(false);
+                console.log(error);
+            }
+
+            try {
+                const querySecondary = util.promisify(secondaryNodeConnection.query).bind(secondaryNodeConnection);
+                let isFoundSecondary = await querySecondary(
+                    'SELECT * FROM appointments WHERE apptid = ?',
+                    [
+                        transaction.apptid
+                    ]
+                );
+            } catch (error) {
+                resolve(false);
+                console.log(error);
+            }
             
             
             // check check primary node
@@ -456,7 +484,12 @@ async function redoEditTransaction(transaction, region) {
                 if (finalResultPrimary.affectedRows > 0) {
                     console.log(finalResultPrimary.message);
                     resolve(true);
-                } else {
+                }
+                else if(finalResultPrimary.affectedRows == 0 && isFoundPrimary.length == 0) {
+                    console.log(finalResultPrimary.message);
+                    resolve(true);
+                }
+                else {
                     console.log(finalResultPrimary.message);
                     resolve(false);
                 }
@@ -480,6 +513,10 @@ async function redoEditTransaction(transaction, region) {
                 if (finalResultSecondary.affectedRows > 0) {
                     console.log(finalResultSecondary.message);
                     resolve(true);
+                }
+                else if (finalResultSecondary.affectedRows == 0 && isFoundSecondary.length == 0) {
+                    console.log(finalResultSecondary.message);
+                    resolve(true);
                 } else {
                     console.log(finalResultSecondary.message);
                     resolve(false);
@@ -490,6 +527,9 @@ async function redoEditTransaction(transaction, region) {
             }
 
             if ((finalResultPrimary.affectedRows > 0) && finalResultSecondary.affectedRows > 0) {
+                resolve(true);
+            }
+            else if ((finalResultPrimary.affectedRows == 0 && isFoundPrimary.length == 0) && (finalResultSecondary.affectedRows == 0 && isFoundSecondary.length == 0)) {
                 resolve(true);
             }
             else {
