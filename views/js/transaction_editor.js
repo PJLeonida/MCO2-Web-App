@@ -132,10 +132,7 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
             formatter: (cell) => cell ? 'Yes' : 'No'
         }, {
             id: 'island',
-            name: 'Island',
-            filter: {
-                type: 'select', // Use a select dropdown for filtering
-            }
+            name: 'Island'
         }, {
             name: 'Actions',
             formatter: (cell, row) => {
@@ -204,10 +201,7 @@ function loadAppointmentGrid(appointmentsJSON, containerID) {
             formatter: (cell) => cell ? 'Yes' : 'No'
         }, {
             id: 'island',
-            name: 'Island',
-            filter: {
-                type: 'select', // Use a select dropdown for filtering
-            }
+            name: 'Island'
         }, {
             name: 'Actions',
             formatter: (cell, row) => {
