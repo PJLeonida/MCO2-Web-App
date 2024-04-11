@@ -56,11 +56,14 @@ import { connect } from 'http2';
 import fs, { write } from 'fs';
 import { fileURLToPath } from 'url';
 import path, { dirname, parse } from 'path';
-import mysql from 'mysql2'
+import mysql from 'mysql2';
+import dotenv from 'dotenv';
 
+// Environment variable config
+dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Paths
 const __filename = fileURLToPath(import.meta.url);
@@ -1495,6 +1498,6 @@ app.post('/delete/:id', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
     console.log(`Server is running on port ${port}`);
 });
