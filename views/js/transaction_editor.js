@@ -1,3 +1,5 @@
+let appointmentsContainer;
+
 function showAddAppointmentModal() {
     let modal = document.getElementById('addAppointmentModal');
     modal.classList.remove('hidden');
@@ -69,6 +71,7 @@ async function getAllAppointments() {
         } 
 
         const data = await response.json();
+        appointmentsContainer = data;
         return data;
     } catch (error) {
         console.error('Error fetching appointments', error);
@@ -85,6 +88,18 @@ async function getAppointment(appointmentID) {
         }
         const data = await response.json();
         return data;
+    } catch (error) {
+        console.error('Error fetching appointment', error);
+        return null;
+    }
+}
+
+async function getAppointmentById(appointments, appointmendID) {
+    try {
+        
+        let searchedAppointment = appointments.filter(appointment => appointment.apptid === appointmendID);
+        return searchedAppointment;
+        return JSON.stringify(searchedAppointment);
     } catch (error) {
         console.error('Error fetching appointment', error);
         return null;
@@ -247,8 +262,14 @@ async function reloadAppointment() {
             showInitialTable();
             return;
         }
-        container = document.getElementById('apts-search-table');
-        let appointmentsJSON = await getAppointment(appointmentID);
+
+        // Now, jsonData contains the data from the Grid in JSON format
+        console.log('Searched Appointment');
+
+        let appointmentsJSON = await getAppointmentById(appointmentsContainer, appointmentID);
+
+        console.log(appointmentsJSON);
+
         loadAppointmentGrid(appointmentsJSON, 'search-table-container');
     } catch (error) {
         console.error('Error reloading appointment grid', error);
