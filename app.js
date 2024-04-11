@@ -1107,7 +1107,7 @@ app.get('/get-appointment/:id', async (req, res) => {
     } catch (error) {
         try {
             const results2 = await new Promise((resolve, reject) => {
-                luzonNode.query('SELECT * FROM appointments', (error, results, fields) => {
+                luzonNode.query('SELECT * FROM appointments where apptid = ?', id, (error, results, fields) => {
                     if (error) {
                         console.error('Error executing query:', error);
                         reject(error);
@@ -1117,7 +1117,7 @@ app.get('/get-appointment/:id', async (req, res) => {
                 });
             });
             const results1 = await new Promise((resolve, reject) => {
-                visayasMindanaoNode.query('SELECT * FROM appointments', (error, results, fields) => {
+                visayasMindanaoNode.query('SELECT * FROM appointments where apptid = ?', id, (error, results, fields) => {
                     if (error) {
                         console.error('Error executing query:', error);
                         reject(error);
