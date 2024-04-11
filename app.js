@@ -1105,10 +1105,9 @@ app.get('/get-appointment/:id', async (req, res) => {
         });
         res.json(results);
     } catch (error) {
-        console.error('Error querying central node:', error);
         try {
-            const results = await new Promise((resolve, reject) => {
-                luzonNode.query('SELECT * FROM appointments WHERE apptid = ?', id, (error, results, fields) => {
+            const results2 = await new Promise((resolve, reject) => {
+                luzonNode.query('SELECT * FROM appointments', (error, results, fields) => {
                     if (error) {
                         console.error('Error executing query:', error);
                         reject(error);
@@ -1117,9 +1116,22 @@ app.get('/get-appointment/:id', async (req, res) => {
                     }
                 });
             });
-            res.json(results);
+            const results1 = await new Promise((resolve, reject) => {
+                visayasMindanaoNode.query('SELECT * FROM appointments', (error, results, fields) => {
+                    if (error) {
+                        console.error('Error executing query:', error);
+                        reject(error);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            });
+
+            
+            const finalResults = [...results1, ...results2];
+            res.json(finalResults);
         } catch (error) {
-            console.error('Error querying secondary node:', error);
+            console.error('Error querying secondary nodes:', error);
             res.status(500).send('Internal Server Error');
         }
     }
